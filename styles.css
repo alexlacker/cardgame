@@ -135,6 +135,14 @@ button { font: inherit; }
 .player-hero-power { right: 7%; bottom: 7%; }
 .hand-placeholder { position: absolute; left: 50%; bottom: -135px; width: 520px; height: 250px; transform: translateX(-50%); z-index: 3; pointer-events: none; border: 2px solid #6d4931aa; border-bottom: 0; border-radius: 280px 280px 0 0; background: #ad8460; box-shadow: 0 -5px 18px #4d2d1b33, inset 0 5px 12px #bb8c6040; }
 .opponent-hand-placeholder { top: -135px; bottom: auto; transform: translateX(-50%) rotate(180deg); }
+.deck-stack { position: absolute; right: 2%; z-index: 4; display: grid; place-items: center; align-content: center; width: clamp(54px, 6vw, 76px); height: clamp(76px, 10vw, 108px); border: 3px solid #3a281f; border-radius: 10px; color: #f4dfbd; background: linear-gradient(145deg, #72543e, #3a2925 68%, #211a19); box-shadow: 0 0 0 2px #c49a6d88, 0 6px 14px #2b1b1599, inset 0 0 0 3px #b98b5d55; font-family: Cinzel, serif; pointer-events: none; }
+.deck-stack::before, .deck-stack::after { content: ""; position: absolute; inset: 4px; border: 2px solid #b98b5d66; border-radius: 7px; pointer-events: none; }
+.deck-stack::before { transform: translate(-5px, 5px); z-index: -1; opacity: .75; }
+.deck-stack::after { transform: translate(-9px, 9px); z-index: -2; opacity: .5; }
+.opponent-deck { top: calc(50% - 166px); transform: rotate(180deg); }
+.player-deck { top: calc(50% + 58px); }
+.deck-count { position: relative; z-index: 1; display: grid; place-items: center; width: 34px; height: 34px; border: 2px solid #e9d09a; border-radius: 50%; color: #fff0ca; background: #4b3327; font: 800 18px Cinzel, serif; }
+.deck-label { position: relative; z-index: 1; margin-top: 6px; color: #d9b87c; font: 800 10px Cinzel, serif; letter-spacing: .1em; }
 .hero-hit-zone { position: absolute; left: 50%; z-index: 4; display: grid; place-items: center; width: 185px; height: 96px; transform: translateX(-50%); border: 5px solid #513527; border-radius: 32px; color: #d9ba82; background: radial-gradient(ellipse at 38% 30%, #987054, #4f3528 64%, #2e211c); box-shadow: 0 0 0 3px #c49b6d88, 0 5px 14px #3d231899, inset 0 0 0 5px #2f211b; font: 800 22px Cinzel, serif; letter-spacing: .08em; }
 .hero-hit-zone::after { content: ""; position: absolute; inset: 9px; border: 1px solid #e2bc7c77; border-radius: 23px; }
 .hero-hit-zone { user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -186,6 +194,14 @@ button { font: inherit; }
   .card { width: 52px; height: 76px; }
   .card-symbol { font-size: 22px; }
   .end-turn { right: 3%; padding: 10px 10px; font-size: 9px; }
+  .deck-stack { right: 3%; width: 48px; height: 68px; border-width: 2px; }
+  .deck-stack::before, .deck-stack::after { inset: 3px; border-width: 1px; }
+  .deck-stack::before { transform: translate(-4px, 4px); }
+  .deck-stack::after { transform: translate(-7px, 7px); }
+  .opponent-deck { top: calc(50% - 126px); }
+  .player-deck { top: calc(50% + 52px); }
+  .deck-count { width: 26px; height: 26px; font-size: 14px; }
+  .deck-label { margin-top: 3px; font-size: 7px; }
   .hand-placeholder { bottom: -108px; width: 390px; height: 190px; }
   .opponent-hand-placeholder { top: -108px; bottom: auto; }
   .hero-hit-zone { width: 142px; height: 76px; border-radius: 25px; font-size: 18px; }
