@@ -196,12 +196,14 @@ window.addEventListener('pointermove', (event) => {
   const deltaX = pointerX - arrowStart.x;
   const deltaY = pointerY - arrowStart.y;
   const distance = Math.hypot(deltaX, deltaY);
-  const arrowGap = Math.min(23, distance);
+  const arrowGap = Math.min(46, distance);
   const endRatio = distance ? (distance - arrowGap) / distance : 0;
   activeArrow.setAttribute('x2', arrowStart.x + deltaX * endRatio);
   activeArrow.setAttribute('y2', arrowStart.y + deltaY * endRatio);
   const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-  activeArrowHead.setAttribute('transform', `translate(${pointerX} ${pointerY}) rotate(${angle})`);
+  const headCenterX = pointerX - (distance ? deltaX / distance : 1) * 23;
+  const headCenterY = pointerY - (distance ? deltaY / distance : 0) * 23;
+  activeArrowHead.setAttribute('transform', `translate(${headCenterX} ${headCenterY}) rotate(${angle})`);
   opponentHero.classList.toggle('hero-targeted', pointIsInside(opponentHero, event.clientX, event.clientY));
 });
 
