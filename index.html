@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alex's Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=49" />
+  </head>
+  <body>
+    <main class="game-shell" aria-label="Alex's Game board">
+      <section class="board-wrap">
+        <div class="board" id="board">
+          <div class="board-highlight"></div>
+          <svg class="attack-arrow-layer" id="attackArrows" aria-hidden="true">
+            <defs>
+              <marker id="redArrowHead" markerWidth="3.5" markerHeight="3.5" refX="3.2" refY="1.75" orient="auto">
+                <path d="M0.35 0.35L3.2 1.75 0.35 3.15Z"></path>
+              </marker>
+            </defs>
+          </svg>
+
+          <div class="battlefield">
+            <div class="unit-lane opponent-lane" aria-label="Opponent unit lane">
+              <div class="slot-ring"></div><div class="slot-ring"></div><div class="slot-ring"></div><div class="slot-ring"></div><div class="slot-ring"></div><div class="slot-ring"></div><div class="slot-ring"></div>
+            </div>
+            <div class="unit-lane player-lane" aria-label="Your unit lane">
+              <div class="slot-ring primary-slot"></div><div class="slot-ring secondary-slot"></div><div class="slot-ring primary-slot"></div><div class="slot-ring secondary-slot"></div><div class="slot-ring primary-slot"></div><div class="slot-ring secondary-slot"></div><div class="slot-ring primary-slot"></div><div class="slot-ring secondary-slot"></div><div class="slot-ring primary-slot"></div><div class="slot-ring secondary-slot"></div><div class="slot-ring primary-slot"></div><div class="slot-ring secondary-slot"></div><div class="slot-ring primary-slot"></div>
+            </div>
+          </div>
+
+          <div class="mana-bar opponent-mana-bar" aria-label="Opponent mana: 0 of 0">
+            <span class="mana-count">0 / 0</span>
+            <div class="crystals" aria-hidden="true">
+              <span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span>
+            </div>
+          </div>
+          <div class="mana-bar player-mana-bar" aria-label="Your mana: 0 of 0">
+            <span class="mana-count">0 / 0</span>
+            <div class="crystals" aria-hidden="true">
+              <span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span><span class="crystal"></span>
+            </div>
+          </div>
+          <div class="hero-power-bar opponent-hero-power" aria-label="Opponent hero power">
+            <strong>HERO POWER:</strong><span>Summon a<br />1/1 soldier</span>
+          </div>
+          <button class="hero-power-bar player-hero-power" type="button" aria-label="Use hero power: summon a 1/1 soldier">
+            <strong>HERO POWER:</strong><span>Summon a<br />1/1 soldier</span>
+          </button>
+
+          <div class="hero-hit-zone opponent-hero-hit" aria-label="Opponent hero hit area"><span>HERO-30</span></div>
+          <div class="hero-hit-zone player-hero-hit" aria-label="Your hero hit area"><span>HERO-30</span></div>
+
+          <div class="midline" aria-hidden="true"></div>
+          <div class="hand-placeholder opponent-hand-placeholder" aria-label="Opponent hand placeholder"></div>
+          <div class="hand-placeholder" aria-label="Empty hand placeholder"></div>
+          <button class="end-turn your-turn" id="endTurn" type="button">END TURN</button>
+
+        </div>
+      </section>
+
+    </main>
+    <script src="script.js?v=35"></script>
+  </body>
+</html>
