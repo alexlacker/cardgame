@@ -137,8 +137,8 @@ button { font: inherit; }
 .opponent-hand-placeholder { top: -135px; bottom: auto; transform: translateX(-50%) rotate(180deg); }
 .deck-stack { position: absolute; right: 2%; z-index: 4; isolation: isolate; display: grid; place-items: center; align-content: center; width: clamp(54px, 6vw, 76px); height: clamp(76px, 10vw, 108px); border: 3px solid #3a281f; border-radius: 10px; color: #f4dfbd; background: linear-gradient(145deg, #72543e, #3a2925 68%, #211a19); box-shadow: 0 0 0 2px #c49a6d88, 0 6px 14px #2b1b1599, inset 0 0 0 3px #b98b5d55; font-family: Cinzel, serif; pointer-events: none; }
 .deck-stack::before, .deck-stack::after { content: ""; position: absolute; inset: 0; border: 3px solid #b98b5d88; border-radius: 10px; background: #4b3429; pointer-events: none; }
-.deck-stack::before { transform: translate(-5px, 5px); z-index: -1; opacity: .82; box-shadow: 0 2px 0 #d1a97566; }
-.deck-stack::after { transform: translate(-9px, 9px); z-index: -2; opacity: .62; box-shadow: 0 2px 0 #d1a97555; }
+.deck-stack::before { transform: translate(-3px, 3px); z-index: -1; opacity: .82; box-shadow: 0 2px 0 #d1a97566; }
+.deck-stack::after { transform: translate(-6px, 6px); z-index: -2; opacity: .62; box-shadow: 0 2px 0 #d1a97555; }
 .opponent-deck { top: calc(50% - 166px); transform: rotate(180deg); }
 .player-deck { top: calc(50% + 58px); }
 .deck-count { position: relative; z-index: 1; display: grid; place-items: center; width: 34px; height: 34px; border: 2px solid #e9d09a; border-radius: 50%; color: #fff0ca; background: #4b3327; font: 800 18px Cinzel, serif; }
@@ -195,8 +195,8 @@ button { font: inherit; }
   .end-turn { right: 3%; padding: 10px 10px; font-size: 9px; }
   .deck-stack { right: 3%; width: 48px; height: 68px; border-width: 2px; }
   .deck-stack::before, .deck-stack::after { inset: 0; border-width: 2px; border-radius: 8px; }
-  .deck-stack::before { transform: translate(-4px, 4px); }
-  .deck-stack::after { transform: translate(-7px, 7px); }
+  .deck-stack::before { transform: translate(-2px, 2px); }
+  .deck-stack::after { transform: translate(-4px, 4px); }
   .opponent-deck { top: calc(50% - 126px); }
   .player-deck { top: calc(50% + 52px); }
   .deck-count { width: 26px; height: 26px; font-size: 14px; }
