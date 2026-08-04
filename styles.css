@@ -62,7 +62,7 @@ button { font: inherit; }
 .board-highlight { position: absolute; inset: 0; background: linear-gradient(110deg, #f6c9941f, transparent 30%, transparent 70%, #3b201d1d); pointer-events: none; }
 .attack-arrow-layer { position: absolute; inset: 0; z-index: 10; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .attack-arrow-layer line { stroke: #d4312f; stroke-width: 15; stroke-linecap: butt; stroke-linejoin: round; filter: drop-shadow(0 0 5px #ff6255); }
-.attack-arrow-layer .attack-arrow-head { fill: #d4312f; stroke: #d4312f; stroke-width: .75; stroke-linejoin: round; filter: drop-shadow(0 0 5px #ff6255); }
+.attack-arrow-layer .attack-arrow-head { fill: #d4312f; stroke: #d4312f; stroke-width: .8; stroke-linejoin: round; filter: drop-shadow(0 0 5px #ff6255); }
 .attack-arrow-layer marker path { fill: #d4312f; stroke: #d4312f; stroke-width: .3; stroke-linecap: round; stroke-linejoin: round; }
 .attack-warning { position: absolute; z-index: 20; width: 190px; padding: 8px 10px; transform: translate(-50%, -100%); border: 1px solid #d69b69; border-radius: 8px; color: #fff0d2; background: #3a2923ed; box-shadow: 0 4px 12px #25140ecc; font: 700 11px/1.2 Inter, sans-serif; text-align: center; pointer-events: none; animation: warningPop .2s ease both; }
 .attack-warning.warning-fade { animation: warningFade .35s ease both; }
