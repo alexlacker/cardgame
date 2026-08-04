@@ -141,7 +141,9 @@ button { font: inherit; }
 .deck-stack::after { transform: translate(-8px, 8px); z-index: -2; opacity: .62; box-shadow: 0 2px 0 #d1a97555; }
 .opponent-deck { top: calc(50% - 166px); transform: rotate(180deg); }
 .player-deck { top: calc(50% + 58px); }
-.deck-count { position: relative; z-index: 1; display: grid; place-items: center; width: 34px; height: 34px; border: 2px solid #e9d09a; border-radius: 50%; color: #fff0ca; background: #4b3327; font: 800 18px Cinzel, serif; }
+.deck-count { position: absolute; left: 0; right: auto; top: auto; bottom: auto; z-index: 5; display: grid; place-items: center; box-sizing: border-box; width: 100%; height: 28px; border: 2px solid #3a281f; border-radius: 8px; color: #fff0ca; background: #4b3327; font: 800 13px Cinzel, serif; white-space: nowrap; }
+.player-deck .deck-count { top: calc(100% + 8px); transform: none; }
+.opponent-deck .deck-count { bottom: calc(100% + 8px); transform: rotate(180deg); }
 .hero-hit-zone { position: absolute; left: 50%; z-index: 4; display: grid; place-items: center; width: 185px; height: 96px; transform: translateX(-50%); border: 5px solid #513527; border-radius: 32px; color: #d9ba82; background: radial-gradient(ellipse at 38% 30%, #987054, #4f3528 64%, #2e211c); box-shadow: 0 0 0 3px #c49b6d88, 0 5px 14px #3d231899, inset 0 0 0 5px #2f211b; font: 800 22px Cinzel, serif; letter-spacing: .08em; }
 .hero-hit-zone::after { content: ""; position: absolute; inset: 9px; border: 1px solid #e2bc7c77; border-radius: 23px; }
 .hero-hit-zone { user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -199,7 +201,7 @@ button { font: inherit; }
   .deck-stack::after { transform: translate(-6px, 6px); }
   .opponent-deck { top: calc(50% - 126px); }
   .player-deck { top: calc(50% + 52px); }
-  .deck-count { width: 26px; height: 26px; font-size: 14px; }
+  .deck-count { height: 24px; font-size: 11px; }
   .hand-placeholder { bottom: -108px; width: 390px; height: 190px; }
   .opponent-hand-placeholder { top: -108px; bottom: auto; }
   .hero-hit-zone { width: 142px; height: 76px; border-radius: 25px; font-size: 18px; }
