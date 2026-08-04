@@ -184,7 +184,7 @@ playerLane.addEventListener('pointerdown', (event) => {
   attackArrows.appendChild(activeArrow);
   activeArrowHead = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   activeArrowHead.classList.add('attack-arrow-head');
-  activeArrowHead.setAttribute('d', 'M -12 -9 L 12 0 L -12 9 Z');
+  activeArrowHead.setAttribute('d', 'M -17 -13 L 17 0 L -17 13 Z');
   attackArrows.appendChild(activeArrowHead);
 });
 
@@ -196,7 +196,7 @@ window.addEventListener('pointermove', (event) => {
   const deltaX = pointerX - arrowStart.x;
   const deltaY = pointerY - arrowStart.y;
   const distance = Math.hypot(deltaX, deltaY);
-  const arrowGap = Math.min(12, distance);
+  const arrowGap = Math.min(17, distance);
   const endRatio = distance ? (distance - arrowGap) / distance : 0;
   activeArrow.setAttribute('x2', arrowStart.x + deltaX * endRatio);
   activeArrow.setAttribute('y2', arrowStart.y + deltaY * endRatio);
