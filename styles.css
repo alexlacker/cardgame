@@ -135,7 +135,7 @@ button { font: inherit; }
 .player-hero-power { right: 7%; bottom: 7%; }
 .hand-placeholder { position: absolute; left: 50%; bottom: -135px; width: 520px; height: 250px; transform: translateX(-50%); z-index: 3; pointer-events: none; border: 2px solid #6d4931aa; border-bottom: 0; border-radius: 280px 280px 0 0; background: #ad8460; box-shadow: 0 -5px 18px #4d2d1b33, inset 0 5px 12px #bb8c6040; }
 .opponent-hand-placeholder { top: -135px; bottom: auto; transform: translateX(-50%) rotate(180deg); }
-.deck-stack { position: absolute; right: 2%; z-index: 4; isolation: isolate; display: grid; place-items: center; align-content: center; width: clamp(62px, 7vw, 88px); height: clamp(90px, 12vw, 126px); border: 2px solid #3a281f; border-radius: 10px; color: #f4dfbd; background: linear-gradient(145deg, #72543e, #3a2925 68%, #211a19); box-shadow: 0 0 0 1px #c49a6d88, 0 6px 14px #2b1b1599, inset 0 0 0 2px #b98b5d55; font-family: Cinzel, serif; pointer-events: none; }
+.deck-stack { position: absolute; right: 2%; z-index: 4; isolation: isolate; display: grid; place-items: center; align-content: center; width: clamp(72px, 8vw, 102px); height: clamp(104px, 14vw, 146px); border: 2px solid #3a281f; border-radius: 10px; color: #f4dfbd; background: linear-gradient(145deg, #72543e, #3a2925 68%, #211a19); box-shadow: 0 0 0 1px #c49a6d88, 0 6px 14px #2b1b1599, inset 0 0 0 2px #b98b5d55; font-family: Cinzel, serif; pointer-events: none; }
 .deck-stack::before, .deck-stack::after { content: ""; position: absolute; inset: 0; border: 2px solid #3a281f; border-radius: 10px; background: #4b3429; pointer-events: none; }
 .deck-stack::before { transform: translate(-4px, 4px); z-index: -1; opacity: .82; box-shadow: 0 2px 0 #d1a97566; }
 .deck-stack::after { transform: translate(-8px, 8px); z-index: -2; opacity: .62; box-shadow: 0 2px 0 #d1a97555; }
@@ -193,7 +193,7 @@ button { font: inherit; }
   .card { width: 52px; height: 76px; }
   .card-symbol { font-size: 22px; }
   .end-turn { right: 3%; padding: 10px 10px; font-size: 9px; }
-  .deck-stack { right: 3%; width: 54px; height: 78px; border-width: 1.5px; }
+  .deck-stack { right: 3%; width: 60px; height: 86px; border-width: 1.5px; }
   .deck-stack::before, .deck-stack::after { inset: 0; border-width: 1.5px; border-radius: 8px; }
   .deck-stack::before { transform: translate(-3px, 3px); }
   .deck-stack::after { transform: translate(-6px, 6px); }
