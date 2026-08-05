@@ -107,7 +107,7 @@ function addBlankCardToHand() {
     hoverTimer = window.setTimeout(() => {
       card.classList.add('hand-card-hovered');
       card.style.zIndex = '100';
-    }, 500);
+    }, 250);
   });
   card.addEventListener('pointerleave', () => {
     window.clearTimeout(hoverTimer);
