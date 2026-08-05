@@ -164,17 +164,43 @@ function animateCardDraw(card) {
   }, 620);
 }
 
+function setHandPreviewContent(content) {
+  handPreview.innerHTML = `<div class="hand-preview-soldier">${content}</div>`;
+}
+
+function playSoldierCard(card) {
+  if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < 1 || soldiers.length >= 7) {
+    card.classList.add('hand-card-unplayable');
+    window.setTimeout(() => card.classList.remove('hand-card-unplayable'), 350);
+    return;
+  }
+
+  playerCurrentMana -= 1;
+  playerManaCount.textContent = `${playerCurrentMana} / ${playerMaxMana}`;
+  updateManaCrystals(playerManaCrystals, playerCurrentMana, playerMaxMana);
+  playerManaBar.setAttribute('aria-label', `Your mana: ${playerCurrentMana} of ${playerMaxMana}`);
+  handPreview.classList.remove('hand-card-preview-visible');
+  handPreview.setAttribute('aria-hidden', 'true');
+  handPreview.innerHTML = '';
+  playerHand.removeChild(card);
+  arrangePlayerHand();
+  soldiers.push({ hasAttacked: false, summoningSick: true });
+  renderSoldiers();
+}
+
 function addBlankCardToHand() {
   if (playerHand.children.length >= MAX_HAND_SIZE) return;
   const card = document.createElement('div');
-  card.className = 'hand-card hand-card-blank';
-  card.setAttribute('aria-label', 'Blank card');
+  card.className = 'hand-card hand-card-blank hand-card-soldier';
+  card.innerHTML = `<span class="hand-card-cost">1</span>${soldierMarkup}`;
+  card.setAttribute('aria-label', 'Soldier card: costs 1 mana, 1 attack, 1 health');
   let hoverTimer = null;
   card.addEventListener('pointerenter', () => {
     window.clearTimeout(hoverTimer);
     hoverTimer = window.setTimeout(() => {
       card.classList.add('hand-card-hovered');
       card.style.zIndex = '100';
+      setHandPreviewContent(card.innerHTML);
       handPreview.classList.add('hand-card-preview-visible');
       handPreview.setAttribute('aria-hidden', 'false');
     }, 250);
@@ -184,8 +210,10 @@ function addBlankCardToHand() {
     card.classList.remove('hand-card-hovered');
     handPreview.classList.remove('hand-card-preview-visible');
     handPreview.setAttribute('aria-hidden', 'true');
+    handPreview.innerHTML = '';
     arrangePlayerHand();
   });
+  card.addEventListener('click', () => playSoldierCard(card));
   playerHand.appendChild(card);
   arrangePlayerHand();
   animateCardDraw(card);
@@ -196,6 +224,7 @@ function showBurnedCard() {
   window.clearTimeout(burnFinishTimer);
   handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning', 'hand-card-preview-melted');
   handPreview.setAttribute('aria-hidden', 'false');
+  setHandPreviewContent(`<span class="hand-card-cost">1</span>${soldierMarkup}`);
   window.requestAnimationFrame(() => {
     handPreview.classList.add('hand-card-preview-visible');
   });
