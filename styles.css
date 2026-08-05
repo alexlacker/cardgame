@@ -89,6 +89,7 @@ button { font: inherit; }
 .card-back:nth-child(4) { transform: rotate(7deg); }
 
 .battlefield { position: absolute; inset: 20% 8%; z-index: 1; }
+.battlefield.combat-active { z-index: 120; }
 .unit-lane { position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: space-evenly; height: 34%; }
 .opponent-lane { top: 0; }
 .player-lane { bottom: 0; display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); gap: 0; padding: 0 8%; }

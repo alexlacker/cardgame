@@ -2,6 +2,7 @@ const endTurnButton = document.querySelector('#endTurn');
 const playerHeroPower = document.querySelector('.player-hero-power');
 const playerLane = document.querySelector('.player-lane');
 const board = document.querySelector('#board');
+const battlefield = document.querySelector('.battlefield');
 const attackArrows = document.querySelector('#attackArrows');
 const opponentHero = document.querySelector('.opponent-hero-hit');
 const playerManaBar = document.querySelector('.player-mana-bar');
@@ -395,6 +396,7 @@ window.addEventListener('pointerup', (event) => {
     const attackY = targetRect.top + targetRect.height / 2 - soldierRect.top - soldierRect.height / 2;
     attackingElement.style.setProperty('--attack-x', `${attackX}px`);
     attackingElement.style.setProperty('--attack-y', `${attackY}px`);
+    battlefield.classList.add('combat-active');
     attackingElement.classList.add('has-attacked', 'creature-attacking');
     attackingState.hasAttacked = true;
     window.setTimeout(() => {
@@ -405,6 +407,7 @@ window.addEventListener('pointerup', (event) => {
     }, 340);
     window.setTimeout(() => {
       showDamageIndicator(opponentHero, 1);
+      battlefield.classList.remove('combat-active');
       attackingElement.classList.remove('creature-attacking');
       attackingElement.style.removeProperty('--attack-x');
       attackingElement.style.removeProperty('--attack-y');
