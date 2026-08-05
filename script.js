@@ -101,6 +101,19 @@ function addBlankCardToHand() {
   const card = document.createElement('div');
   card.className = 'hand-card hand-card-blank';
   card.setAttribute('aria-label', 'Blank card');
+  let hoverTimer = null;
+  card.addEventListener('pointerenter', () => {
+    window.clearTimeout(hoverTimer);
+    hoverTimer = window.setTimeout(() => {
+      card.classList.add('hand-card-hovered');
+      card.style.zIndex = '100';
+    }, 500);
+  });
+  card.addEventListener('pointerleave', () => {
+    window.clearTimeout(hoverTimer);
+    card.classList.remove('hand-card-hovered');
+    arrangePlayerHand();
+  });
   playerHand.appendChild(card);
   arrangePlayerHand();
 }
