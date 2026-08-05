@@ -114,7 +114,7 @@ function arrangePlayerHand() {
     card.style.marginLeft = index === 0 ? '0px' : `${gap}px`;
     card.style.setProperty('--hand-rotation', `${rotation}deg`);
     card.style.transform = `translateY(-${lift}px) rotate(${rotation}deg)`;
-    card.style.zIndex = String(cards.length - Math.abs(Math.round(offset)));
+    card.style.zIndex = String(index + 1);
   });
 }
 
