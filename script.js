@@ -18,6 +18,7 @@ const playerHand = document.querySelector('.player-hand-cards');
 const handPreview = document.querySelector('.hand-card-preview');
 const soldiers = [];
 const MAX_HAND_SIZE = 10;
+const HERO_POWER_COST = 2;
 let playerMaxMana = 0;
 let playerCurrentMana = 0;
 let opponentMaxMana = 0;
@@ -65,6 +66,15 @@ function animateManaCrystals(crystals, activeCount, newCrystalIndex) {
       window.requestAnimationFrame(() => crystal.classList.add(animationClass));
     }
   });
+}
+
+function updateHeroPowerAvailability() {
+  const isYourTurn = endTurnButton.classList.contains('your-turn');
+  const wasUsed = playerHeroPower.classList.contains('hero-power-used');
+  playerHeroPower.disabled = !isYourTurn || wasUsed || playerCurrentMana < HERO_POWER_COST;
+  playerHeroPower.title = playerCurrentMana < HERO_POWER_COST && !wasUsed
+    ? `Hero power costs ${HERO_POWER_COST} mana`
+    : '';
 }
 
 function drawCardFromDeck(deck, countElement, owner) {
@@ -138,6 +148,7 @@ function startPlayerTurn() {
   playerManaCrystals.forEach((crystal, index) => crystal.classList.toggle('filled', index < playerMaxMana));
   animateManaCrystals(playerManaCrystals, playerMaxMana, previousMaxMana < playerMaxMana ? previousMaxMana : -1);
   playerManaBar.setAttribute('aria-label', `Your mana: ${playerCurrentMana} of ${playerMaxMana}`);
+  updateHeroPowerAvailability();
 }
 
 function startOpponentTurn() {
@@ -189,6 +200,7 @@ endTurnButton.addEventListener('click', () => {
     endTurnButton.classList.add('opponent-turn');
     endTurnButton.textContent = "OPPONENT'S TURN";
     startOpponentTurn();
+    updateHeroPowerAvailability();
   } else {
     const heroPowerWasUsed = playerHeroPower.classList.contains('hero-power-used');
     endTurnButton.classList.remove('opponent-turn');
@@ -196,27 +208,33 @@ endTurnButton.addEventListener('click', () => {
     endTurnButton.textContent = 'END TURN';
     playerHeroPower.disabled = false;
     playerHeroPower.classList.remove('hero-power-used');
-    playerHeroPower.querySelector('span').innerHTML = 'Summon a<br>1/1 soldier';
+    playerHeroPower.querySelector('.hero-power-description').innerHTML = 'Summon a<br>1/1 soldier';
     if (heroPowerWasUsed) {
       playerHeroPower.classList.add('hero-power-flip-back');
       window.setTimeout(() => playerHeroPower.classList.remove('hero-power-flip-back'), 450);
     }
     startPlayerTurn();
+    updateHeroPowerAvailability();
   }
 });
 
 playerHeroPower.addEventListener('click', () => {
+  if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < HERO_POWER_COST) return;
   if (soldiers.length >= 7) {
-    playerHeroPower.querySelector('span').textContent = 'Board is full';
+    playerHeroPower.querySelector('.hero-power-description').textContent = 'Board is full';
     return;
   }
 
+  playerCurrentMana -= HERO_POWER_COST;
+  playerManaCount.textContent = `${playerCurrentMana} / ${playerMaxMana}`;
+  playerManaBar.setAttribute('aria-label', `Your mana: ${playerCurrentMana} of ${playerMaxMana}`);
   soldiers.push({ hasAttacked: false, summoningSick: true });
   renderSoldiers();
   playerHeroPower.disabled = true;
   playerHeroPower.classList.add('hero-power-used', 'hero-power-flip');
-  playerHeroPower.querySelector('span').textContent = 'Used this turn';
+  playerHeroPower.querySelector('.hero-power-description').textContent = 'Used this turn';
   window.setTimeout(() => playerHeroPower.classList.remove('hero-power-flip'), 450);
+  updateHeroPowerAvailability();
 });
 
 startPlayerTurn();

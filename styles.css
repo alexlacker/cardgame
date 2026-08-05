@@ -129,7 +129,8 @@ button { font: inherit; }
 .hero-power-flip-back { animation: heroPowerFlipBack .45s ease; }
 @keyframes heroPowerFlipBack { 0% { transform: rotateY(-90deg) scale(1.04); opacity: .55; } 50% { transform: rotateY(15deg) scale(1.02); opacity: .82; } 100% { transform: rotateY(0) scale(1); opacity: 1; } }
 .hero-power-bar strong { color: #f1c777; font: 800 22px Cinzel, serif; letter-spacing: .08em; white-space: nowrap; }
-.hero-power-bar span { flex: 1; min-width: 0; overflow: visible; color: #e6d7c2; font: 800 22px/1.15 Cinzel, serif; text-overflow: clip; white-space: normal; }
+.hero-power-cost { flex: 0 0 31px; width: 31px; height: 31px; display: grid; place-items: center; border: 2px solid #bfeaf5; border-radius: 50%; color: #f4fdff; background: #2e9fca; box-shadow: 0 0 8px #78ddf5aa, inset 0 0 0 2px #d8f7ff66; font: 800 19px/1 Cinzel, serif; text-shadow: 0 1px 2px #17445a; }
+.hero-power-description { flex: 1; min-width: 0; overflow: visible; color: #e6d7c2; font: 800 22px/1.15 Cinzel, serif; text-overflow: clip; white-space: normal; }
 .opponent-hero-power { top: 7%; right: 5%; }
 .player-hero-power { right: 5%; bottom: 7%; }
 .hand-placeholder { position: absolute; left: 50%; bottom: -135px; width: 600px; height: 250px; transform: translateX(-50%); z-index: 3; pointer-events: none; border: 2px solid #6d4931aa; border-bottom: 0; border-radius: 50% 50% 0 0 / 100% 100% 0 0; background: #ad8460; box-shadow: 0 -5px 18px #4d2d1b33, inset 0 5px 12px #bb8c6040; }
@@ -229,7 +230,8 @@ button { font: inherit; }
   .mana-count { font-size: 12px; }
   .hero-power-bar { width: 320px; padding: 9px 14px; gap: 10px; }
   .hero-power-bar strong { font-size: 14px; }
-  .hero-power-bar span { font-size: 14px; }
+  .hero-power-cost { flex-basis: 25px; width: 25px; height: 25px; font-size: 14px; }
+  .hero-power-description { font-size: 14px; }
   .opponent-hero-power { top: 8%; right: 5%; }
   .player-hero-power { right: 5%; bottom: 8%; }
   .battlefield { inset: 20% 5%; }
