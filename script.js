@@ -402,11 +402,9 @@ window.addEventListener('pointerup', (event) => {
     window.setTimeout(() => {
       opponentHeroHp = Math.max(0, opponentHeroHp - 1);
       opponentHero.querySelector('span').textContent = `HERO-${opponentHeroHp}`;
+      showDamageIndicator(opponentHero, 1);
       opponentHero.classList.add('hero-damaged');
       window.setTimeout(() => opponentHero.classList.remove('hero-damaged'), 400);
-    }, 340);
-    window.setTimeout(() => {
-      showDamageIndicator(opponentHero, 1);
       battlefield.classList.remove('combat-active');
       attackingElement.classList.remove('creature-attacking');
       attackingElement.style.removeProperty('--attack-x');
