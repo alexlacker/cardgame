@@ -132,7 +132,7 @@ button { font: inherit; }
 .hero-power-bar span { flex: 1; min-width: 0; overflow: visible; color: #e6d7c2; font: 800 22px/1.15 Cinzel, serif; text-overflow: clip; white-space: normal; }
 .opponent-hero-power { top: 7%; right: 7%; }
 .player-hero-power { right: 7%; bottom: 7%; }
-.hand-placeholder { position: absolute; left: 50%; bottom: -135px; width: 600px; height: 250px; transform: translateX(-50%); z-index: 3; pointer-events: none; border: 2px solid #6d4931aa; border-bottom: 0; border-radius: 320px 320px 0 0; background: #ad8460; box-shadow: 0 -5px 18px #4d2d1b33, inset 0 5px 12px #bb8c6040; }
+.hand-placeholder { position: absolute; left: 50%; bottom: -135px; width: 600px; height: 250px; transform: translateX(-50%); z-index: 3; pointer-events: none; border: 2px solid #6d4931aa; border-bottom: 0; border-radius: 50% 50% 0 0 / 100% 100% 0 0; background: #ad8460; box-shadow: 0 -5px 18px #4d2d1b33, inset 0 5px 12px #bb8c6040; }
 .opponent-hand-placeholder { top: -135px; bottom: auto; transform: translateX(-50%) rotate(180deg); }
 .player-hand-cards { position: absolute; left: 50%; bottom: 130px; z-index: 2; display: flex; align-items: flex-end; justify-content: center; max-width: 620px; transform: translateX(-50%); }
 .hand-card-blank { position: relative; flex: 0 0 clamp(56px, 6vw, 84px); height: clamp(80px, 9vw, 120px); margin-left: -18px; border: 3px solid #3f2b22; border-radius: 8px; background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); box-shadow: -2px 3px 0 #c39a68, 0 7px 14px #2e1c1499, inset 0 0 0 2px #e1bc8366; transform-origin: bottom center; transition: transform .25s ease; animation: handCardDraw .35s ease both; }
