@@ -108,10 +108,39 @@ function arrangePlayerHand() {
   cards.forEach((card, index) => {
     const offset = index - center;
     const lift = Math.min(30, Math.abs(offset) * 3);
+    const rotation = offset * rotationStep;
     card.style.marginLeft = index === 0 ? '0px' : `${gap}px`;
-    card.style.transform = `translateY(-${lift}px) rotate(${offset * rotationStep}deg)`;
+    card.style.setProperty('--hand-rotation', `${rotation}deg`);
+    card.style.transform = `translateY(-${lift}px) rotate(${rotation}deg)`;
     card.style.zIndex = String(cards.length - Math.abs(Math.round(offset)));
   });
+}
+
+function animateCardDraw(card) {
+  const boardRect = board.getBoundingClientRect();
+  const deckRect = playerDeck.getBoundingClientRect();
+  const targetRect = card.getBoundingClientRect();
+  const cardWidth = card.offsetWidth;
+  const cardHeight = card.offsetHeight;
+  const startX = deckRect.left + deckRect.width / 2 - boardRect.left;
+  const startY = deckRect.top + deckRect.height / 2 - boardRect.top;
+  const targetX = targetRect.left + targetRect.width / 2 - boardRect.left;
+  const targetY = targetRect.top + targetRect.height / 2 - boardRect.top;
+  const flight = document.createElement('div');
+  flight.className = 'draw-card-flight';
+  flight.style.left = `${startX - cardWidth / 2}px`;
+  flight.style.top = `${startY - cardHeight / 2}px`;
+  flight.style.width = `${cardWidth}px`;
+  flight.style.height = `${cardHeight}px`;
+  flight.style.setProperty('--draw-x', `${targetX - startX}px`);
+  flight.style.setProperty('--draw-y', `${targetY - startY}px`);
+  flight.style.setProperty('--draw-rotation', card.style.getPropertyValue('--hand-rotation') || '0deg');
+  board.appendChild(flight);
+  card.classList.add('hand-card-drawing');
+  window.setTimeout(() => {
+    flight.remove();
+    card.classList.remove('hand-card-drawing');
+  }, 460);
 }
 
 function addBlankCardToHand() {
@@ -138,6 +167,7 @@ function addBlankCardToHand() {
   });
   playerHand.appendChild(card);
   arrangePlayerHand();
+  animateCardDraw(card);
 }
 
 function startPlayerTurn() {
