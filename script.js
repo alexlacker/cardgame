@@ -86,7 +86,7 @@ function arrangePlayerHand() {
     ? Math.min(desiredGap, (availableWidth - cardWidth * cards.length) / (cards.length - 1))
     : 0;
   const center = (cards.length - 1) / 2;
-  const rotationStep = Math.min(5, 28 / Math.max(1, cards.length - 1));
+  const rotationStep = Math.min(10, 90 / Math.max(1, cards.length - 1));
   cards.forEach((card, index) => {
     const offset = index - center;
     const lift = Math.min(30, Math.abs(offset) * 3);
