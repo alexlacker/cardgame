@@ -80,7 +80,7 @@ function drawCardFromDeck(deck, countElement, owner) {
 function arrangePlayerHand() {
   const cards = [...playerHand.children];
   const availableWidth = playerHand.clientWidth || 600;
-  const cardWidth = cards[0]?.getBoundingClientRect().width || 0;
+  const cardWidth = cards[0]?.offsetWidth || 0;
   const desiredGap = 10;
   const gap = cards.length > 1
     ? Math.min(desiredGap, (availableWidth - cardWidth * cards.length) / (cards.length - 1))
