@@ -139,7 +139,7 @@ button { font: inherit; }
 .deck-stack::before, .deck-stack::after { content: ""; position: absolute; inset: 0; border: 2px solid #3a281f; border-radius: 10px; background: #4b3429; pointer-events: none; }
 .deck-stack::before { transform: translate(-4px, 4px); z-index: -1; opacity: .82; box-shadow: 0 2px 0 #d1a97566; }
 .deck-stack::after { transform: translate(-8px, 8px); z-index: -2; opacity: .62; box-shadow: 0 2px 0 #d1a97555; }
-.opponent-deck { top: calc(50% - 166px); transform: rotate(180deg); }
+.opponent-deck { top: calc(50% - 220px); transform: rotate(180deg); }
 .player-deck { top: calc(50% + 58px); }
 .deck-count { position: absolute; left: 0; right: auto; top: auto; bottom: auto; z-index: 5; display: grid; place-items: center; box-sizing: border-box; width: 100%; height: 28px; border: 2px solid #3a281f; border-radius: 8px; color: #fff0ca; background: #4b3327; font: 800 13px Cinzel, serif; white-space: nowrap; }
 .player-deck .deck-count { top: calc(100% + 8px); transform: none; }
@@ -199,7 +199,7 @@ button { font: inherit; }
   .deck-stack::before, .deck-stack::after { inset: 0; border-width: 1.5px; border-radius: 8px; }
   .deck-stack::before { transform: translate(-3px, 3px); }
   .deck-stack::after { transform: translate(-6px, 6px); }
-  .opponent-deck { top: calc(50% - 126px); }
+  .opponent-deck { top: calc(50% - 160px); }
   .player-deck { top: calc(50% + 52px); }
   .deck-count { height: 24px; font-size: 11px; }
   .hand-placeholder { bottom: -108px; width: 390px; height: 190px; }
