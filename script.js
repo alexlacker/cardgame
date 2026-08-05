@@ -182,7 +182,7 @@ function showBurnedCard() {
   });
   burnRevealTimer = window.setTimeout(() => {
     handPreview.classList.add('hand-card-preview-burning');
-  }, 2000);
+  }, 1500);
   burnFinishTimer = window.setTimeout(() => {
     handPreview.classList.remove('hand-card-preview-burning');
     handPreview.classList.add('hand-card-preview-melted');
@@ -190,7 +190,7 @@ function showBurnedCard() {
       handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-melted');
       handPreview.setAttribute('aria-hidden', 'true');
     }, 220);
-  }, 3280);
+  }, 2780);
 }
 
 function drawPlayerCard() {
