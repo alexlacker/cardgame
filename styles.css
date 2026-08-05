@@ -80,7 +80,6 @@ button { font: inherit; }
 .heart { color: #e87566; font-size: 15px; text-shadow: 0 1px 3px #331913; }
 .armor { margin-left: 3px; color: #c7d8db; font-size: 10px; }
 .deck-stack { position: relative; display: grid; place-items: end; width: 54px; height: 70px; margin-left: auto; border: 3px solid #3e2a22; border-radius: 7px; background: repeating-linear-gradient(135deg, #4e6270 0 5px, #80909a 5px 7px, #32424f 7px 11px); box-shadow: -4px 3px 0 #79573d, -7px 6px 0 #5d412f, 0 8px 13px #492d20aa; }
-.deck-stack span { position: absolute; right: -9px; bottom: -9px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #24272a; border: 2px solid #bea06e; color: #f0d49c; font-size: 10px; }
 .mana { display: flex; align-items: center; gap: 7px; margin-left: 20px; color: #eef4f6; font-size: 12px; font-weight: 700; text-shadow: 0 1px 2px #162027; }
 .mana-gem { color: #94d5e4; font-size: 17px; text-shadow: 0 0 7px #8fe1fa; }
 .hand { display: flex; align-items: center; height: 88px; margin-left: 22px; }
