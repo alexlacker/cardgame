@@ -76,11 +76,24 @@ function drawCardFromDeck(deck, countElement, owner) {
   return true;
 }
 
+function arrangePlayerHand() {
+  const cards = [...playerHand.children];
+  const center = (cards.length - 1) / 2;
+  const rotationStep = Math.min(5, 28 / Math.max(1, cards.length - 1));
+  cards.forEach((card, index) => {
+    const offset = index - center;
+    const lift = Math.min(30, Math.abs(offset) * 3);
+    card.style.transform = `translateY(-${lift}px) rotate(${offset * rotationStep}deg)`;
+    card.style.zIndex = String(cards.length - Math.abs(Math.round(offset)));
+  });
+}
+
 function addBlankCardToHand() {
   const card = document.createElement('div');
   card.className = 'hand-card hand-card-blank';
   card.setAttribute('aria-label', 'Blank card');
   playerHand.appendChild(card);
+  arrangePlayerHand();
 }
 
 function startPlayerTurn() {
