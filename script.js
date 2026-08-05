@@ -186,7 +186,7 @@ function showBurnedCard() {
   burnFinishTimer = window.setTimeout(() => {
     handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning');
     handPreview.setAttribute('aria-hidden', 'true');
-  }, 2980);
+  }, 3280);
 }
 
 function drawPlayerCard() {
