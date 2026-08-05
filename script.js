@@ -33,6 +33,7 @@ let attackingSoldier = null;
 let attackingSoldierState = null;
 let opponentHeroHp = 30;
 let activeAttackWarning = null;
+let activeDamageIndicator = null;
 let burnRevealTimer = null;
 let burnFinishTimer = null;
 
@@ -52,6 +53,23 @@ function showAttackWarning(soldier) {
     warning.remove();
     if (activeAttackWarning === warning) activeAttackWarning = null;
   }, 1000);
+}
+
+function showDamageIndicator(target, amount) {
+  if (activeDamageIndicator) activeDamageIndicator.remove();
+  const boardRect = board.getBoundingClientRect();
+  const targetRect = target.getBoundingClientRect();
+  const indicator = document.createElement('div');
+  indicator.className = 'damage-indicator';
+  indicator.textContent = `-${amount}`;
+  indicator.style.left = `${targetRect.left + targetRect.width / 2 - boardRect.left}px`;
+  indicator.style.top = `${targetRect.top + targetRect.height / 2 - boardRect.top}px`;
+  board.appendChild(indicator);
+  activeDamageIndicator = indicator;
+  window.setTimeout(() => {
+    indicator.remove();
+    if (activeDamageIndicator === indicator) activeDamageIndicator = null;
+  }, 900);
 }
 
 function pointIsInside(element, x, y) {
@@ -386,6 +404,7 @@ window.addEventListener('pointerup', (event) => {
       window.setTimeout(() => opponentHero.classList.remove('hero-damaged'), 400);
     }, 340);
     window.setTimeout(() => {
+      showDamageIndicator(opponentHero, 1);
       attackingElement.classList.remove('creature-attacking');
       attackingElement.style.removeProperty('--attack-x');
       attackingElement.style.removeProperty('--attack-y');
