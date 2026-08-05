@@ -16,6 +16,7 @@ const opponentDeck = document.querySelector('.opponent-deck');
 const opponentDeckCount = opponentDeck.querySelector('.deck-count');
 const playerHand = document.querySelector('.player-hand-cards');
 const soldiers = [];
+const MAX_HAND_SIZE = 10;
 let playerMaxMana = 0;
 let playerCurrentMana = 0;
 let opponentMaxMana = 0;
@@ -89,6 +90,7 @@ function arrangePlayerHand() {
 }
 
 function addBlankCardToHand() {
+  if (playerHand.children.length >= MAX_HAND_SIZE) return;
   const card = document.createElement('div');
   card.className = 'hand-card hand-card-blank';
   card.setAttribute('aria-label', 'Blank card');
