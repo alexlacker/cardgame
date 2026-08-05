@@ -369,12 +369,27 @@ window.addEventListener('pointerup', (event) => {
   opponentHero.classList.remove('hero-targeted');
 
   if (hitOpponentHero && attackingSoldier) {
-    opponentHeroHp = Math.max(0, opponentHeroHp - 1);
-    opponentHero.querySelector('span').textContent = `HERO-${opponentHeroHp}`;
-    attackingSoldier.classList.add('has-attacked');
-    attackingSoldierState.hasAttacked = true;
-    opponentHero.classList.add('hero-damaged');
-    window.setTimeout(() => opponentHero.classList.remove('hero-damaged'), 400);
+    const attackingElement = attackingSoldier;
+    const attackingState = attackingSoldierState;
+    const soldierRect = attackingElement.getBoundingClientRect();
+    const targetRect = opponentHero.getBoundingClientRect();
+    const attackX = targetRect.left + targetRect.width / 2 - soldierRect.left - soldierRect.width / 2;
+    const attackY = targetRect.top + targetRect.height / 2 - soldierRect.top - soldierRect.height / 2;
+    attackingElement.style.setProperty('--attack-x', `${attackX}px`);
+    attackingElement.style.setProperty('--attack-y', `${attackY}px`);
+    attackingElement.classList.add('has-attacked', 'creature-attacking');
+    attackingState.hasAttacked = true;
+    window.setTimeout(() => {
+      opponentHeroHp = Math.max(0, opponentHeroHp - 1);
+      opponentHero.querySelector('span').textContent = `HERO-${opponentHeroHp}`;
+      opponentHero.classList.add('hero-damaged');
+      window.setTimeout(() => opponentHero.classList.remove('hero-damaged'), 400);
+    }, 340);
+    window.setTimeout(() => {
+      attackingElement.classList.remove('creature-attacking');
+      attackingElement.style.removeProperty('--attack-x');
+      attackingElement.style.removeProperty('--attack-y');
+    }, 980);
   }
 
   arrowStart = null;
