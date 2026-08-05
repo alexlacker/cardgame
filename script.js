@@ -405,6 +405,8 @@ window.addEventListener('pointerup', (event) => {
       showDamageIndicator(opponentHero, 1);
       opponentHero.classList.add('hero-damaged');
       window.setTimeout(() => opponentHero.classList.remove('hero-damaged'), 400);
+    }, 600);
+    window.setTimeout(() => {
       battlefield.classList.remove('combat-active');
       attackingElement.classList.remove('creature-attacking');
       attackingElement.style.removeProperty('--attack-x');
