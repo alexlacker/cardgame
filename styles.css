@@ -142,11 +142,13 @@ button { font: inherit; }
 .hand-card-blank.hand-card-hovered { z-index: 100 !important; filter: brightness(1.08); box-shadow: 0 8px 18px #2e1c14aa, 0 0 0 2px #f1c777, inset 0 0 0 2px #f6d89a; }
 .hand-card-blank:first-child { margin-left: 0; }
 .hand-card-blank::after { content: ""; position: absolute; inset: 9px; border: 1px solid #e0b87d66; border-radius: 5px; }
-.draw-card-flight { position: absolute; z-index: 90; border-radius: 8px; pointer-events: none; perspective: 700px; transform-style: preserve-3d; animation: drawCardFlight .62s cubic-bezier(.22,.72,.28,1) both; }
-.draw-card-flight::before, .draw-card-flight::after { content: ""; position: absolute; inset: 0; border: 3px solid #101827; border-radius: 8px; backface-visibility: hidden; box-shadow: 0 8px 16px #101827aa, 0 0 0 2px #5d8fbd88, inset 0 0 0 2px #6b9bc455; }
-.draw-card-flight::before { background: conic-gradient(#0b1220 25%, #24507b 0 50%, #0b1220 0 75%, #24507b 0) 0 0 / 14px 14px repeat; }
-.draw-card-flight::after { background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); transform: rotateY(180deg); }
-@keyframes drawCardFlight { 0% { opacity: 0; transform: translate(0, 0) rotate(-4deg) rotateY(0) scale(.72); } 15% { opacity: 1; } 50% { transform: translate(var(--draw-mid-x), var(--draw-mid-y)) rotate(-1deg) rotateY(90deg) scale(.92); } 100% { opacity: 1; transform: translate(var(--draw-x), var(--draw-y)) rotate(var(--draw-rotation)) rotateY(180deg) scale(1); } }
+.draw-card-flight { position: absolute; z-index: 90; border-radius: 8px; background: #3f2b22; pointer-events: none; perspective: 700px; transform-style: preserve-3d; animation: drawCardFlight .62s cubic-bezier(.35,.1,.65,1) both; }
+.draw-card-flight::before, .draw-card-flight::after { content: ""; position: absolute; inset: 0; border: 3px solid #101827; border-radius: 8px; backface-visibility: visible; box-shadow: 0 8px 16px #101827aa, 0 0 0 2px #5d8fbd88, inset 0 0 0 2px #6b9bc455; }
+.draw-card-flight::before { background: conic-gradient(#0b1220 25%, #24507b 0 50%, #0b1220 0 75%, #24507b 0) 0 0 / 14px 14px repeat; animation: drawCardBackFace .62s ease both; }
+.draw-card-flight::after { background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); transform: rotateY(180deg); animation: drawCardFrontFace .62s ease both; }
+@keyframes drawCardFlight { 0% { opacity: 0; transform: translate(0, 0) rotate(-4deg) rotateY(0) scale(.72); } 15% { opacity: 1; } 100% { opacity: 1; transform: translate(var(--draw-x), var(--draw-y)) rotate(var(--draw-rotation)) rotateY(180deg) scale(1); } }
+@keyframes drawCardBackFace { 0%, 38% { opacity: 1; } 58%, 100% { opacity: 0; } }
+@keyframes drawCardFrontFace { 0%, 38% { opacity: 0; } 58%, 100% { opacity: 1; } }
 .hand-card-preview { position: absolute; left: 50%; bottom: 26%; z-index: 1000; width: clamp(120px, 14vw, 190px); height: clamp(170px, 22vw, 270px); border: 4px solid #3f2b22; border-radius: 11px; background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); box-shadow: 0 18px 36px #1f120ecc, 0 0 0 3px #f1c777, inset 0 0 0 3px #e1bc8366; opacity: 0; visibility: hidden; pointer-events: none; transform: translate(-50%, 22px) scale(.9); transition: opacity .2s ease, transform .2s ease, visibility .2s ease; }
 .hand-card-preview::after { content: ""; position: absolute; inset: 12px; border: 1px solid #e0b87d88; border-radius: 7px; }
 .hand-card-preview.hand-card-preview-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1); }

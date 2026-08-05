@@ -134,8 +134,6 @@ function animateCardDraw(card) {
   flight.style.height = `${cardHeight}px`;
   flight.style.setProperty('--draw-x', `${targetX - startX}px`);
   flight.style.setProperty('--draw-y', `${targetY - startY}px`);
-  flight.style.setProperty('--draw-mid-x', `${(targetX - startX) * 0.48}px`);
-  flight.style.setProperty('--draw-mid-y', `${(targetY - startY) * 0.48}px`);
   flight.style.setProperty('--draw-rotation', card.style.getPropertyValue('--hand-rotation') || '0deg');
   board.appendChild(flight);
   card.classList.add('hand-card-drawing');
