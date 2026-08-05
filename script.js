@@ -79,11 +79,18 @@ function drawCardFromDeck(deck, countElement, owner) {
 
 function arrangePlayerHand() {
   const cards = [...playerHand.children];
+  const availableWidth = playerHand.clientWidth || 600;
+  const cardWidth = cards[0]?.getBoundingClientRect().width || 0;
+  const desiredGap = 10;
+  const gap = cards.length > 1
+    ? Math.min(desiredGap, (availableWidth - cardWidth * cards.length) / (cards.length - 1))
+    : 0;
   const center = (cards.length - 1) / 2;
   const rotationStep = Math.min(5, 28 / Math.max(1, cards.length - 1));
   cards.forEach((card, index) => {
     const offset = index - center;
     const lift = Math.min(30, Math.abs(offset) * 3);
+    card.style.marginLeft = index === 0 ? '0px' : `${gap}px`;
     card.style.transform = `translateY(-${lift}px) rotate(${offset * rotationStep}deg)`;
     card.style.zIndex = String(cards.length - Math.abs(Math.round(offset)));
   });
