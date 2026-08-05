@@ -175,7 +175,7 @@ function addBlankCardToHand() {
 function showBurnedCard() {
   window.clearTimeout(burnRevealTimer);
   window.clearTimeout(burnFinishTimer);
-  handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning');
+  handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning', 'hand-card-preview-melted');
   handPreview.setAttribute('aria-hidden', 'false');
   window.requestAnimationFrame(() => {
     handPreview.classList.add('hand-card-preview-visible');
@@ -184,8 +184,12 @@ function showBurnedCard() {
     handPreview.classList.add('hand-card-preview-burning');
   }, 2000);
   burnFinishTimer = window.setTimeout(() => {
-    handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning');
-    handPreview.setAttribute('aria-hidden', 'true');
+    handPreview.classList.remove('hand-card-preview-burning');
+    handPreview.classList.add('hand-card-preview-melted');
+    window.setTimeout(() => {
+      handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-melted');
+      handPreview.setAttribute('aria-hidden', 'true');
+    }, 220);
   }, 3280);
 }
 
