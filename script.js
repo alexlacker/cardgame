@@ -15,6 +15,7 @@ const playerDeckCount = playerDeck.querySelector('.deck-count');
 const opponentDeck = document.querySelector('.opponent-deck');
 const opponentDeckCount = opponentDeck.querySelector('.deck-count');
 const playerHand = document.querySelector('.player-hand-cards');
+const handPreview = document.querySelector('.hand-card-preview');
 const soldiers = [];
 const MAX_HAND_SIZE = 10;
 let playerMaxMana = 0;
@@ -107,11 +108,15 @@ function addBlankCardToHand() {
     hoverTimer = window.setTimeout(() => {
       card.classList.add('hand-card-hovered');
       card.style.zIndex = '100';
+      handPreview.classList.add('hand-card-preview-visible');
+      handPreview.setAttribute('aria-hidden', 'false');
     }, 250);
   });
   card.addEventListener('pointerleave', () => {
     window.clearTimeout(hoverTimer);
     card.classList.remove('hand-card-hovered');
+    handPreview.classList.remove('hand-card-preview-visible');
+    handPreview.setAttribute('aria-hidden', 'true');
     arrangePlayerHand();
   });
   playerHand.appendChild(card);
