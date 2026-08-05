@@ -115,6 +115,7 @@ button { font: inherit; }
 .crystals { display: flex; align-items: center; gap: 4px; }
 .crystal { display: block; width: 24px; height: 32px; clip-path: polygon(50% 0, 88% 26%, 76% 82%, 50% 100%, 24% 82%, 12% 26%); background: linear-gradient(150deg, #263d47, #1a272d); box-shadow: inset 0 0 0 1px #182226; }
 .crystal.filled { background: linear-gradient(150deg, #d7fbff 0%, #75d9ed 28%, #2a86b6 72%, #18516f 100%); filter: drop-shadow(0 0 4px #70dff5); }
+.crystal.spent { background: linear-gradient(150deg, #d0d4d5 0%, #969da0 32%, #626a6d 72%, #42494c 100%); filter: drop-shadow(0 0 2px #b9c0c2aa); box-shadow: inset 0 0 0 1px #343a3d; }
 .mana-crystal-refresh { animation: manaCrystalRefresh .9s ease var(--crystal-delay) both; }
 @keyframes manaCrystalRefresh { 0% { filter: drop-shadow(0 0 2px #70dff5); } 45% { filter: drop-shadow(0 0 12px #c9faff) brightness(1.25); } 100% { filter: drop-shadow(0 0 4px #70dff5); } }
 .mana-crystal-fade-in { animation: manaCrystalFadeIn .9s ease var(--crystal-delay) both; }

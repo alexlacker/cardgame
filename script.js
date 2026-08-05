@@ -68,6 +68,13 @@ function animateManaCrystals(crystals, activeCount, newCrystalIndex) {
   });
 }
 
+function updateManaCrystals(crystals, currentMana, maxMana) {
+  crystals.forEach((crystal, index) => {
+    crystal.classList.toggle('filled', index < currentMana);
+    crystal.classList.toggle('spent', index >= currentMana && index < maxMana);
+  });
+}
+
 function updateHeroPowerAvailability() {
   const isYourTurn = endTurnButton.classList.contains('your-turn');
   const wasUsed = playerHeroPower.classList.contains('hero-power-used');
@@ -145,7 +152,7 @@ function startPlayerTurn() {
   playerMaxMana = Math.min(10, playerMaxMana + 1);
   playerCurrentMana = playerMaxMana;
   playerManaCount.textContent = `${playerCurrentMana} / ${playerMaxMana}`;
-  playerManaCrystals.forEach((crystal, index) => crystal.classList.toggle('filled', index < playerMaxMana));
+  updateManaCrystals(playerManaCrystals, playerCurrentMana, playerMaxMana);
   animateManaCrystals(playerManaCrystals, playerMaxMana, previousMaxMana < playerMaxMana ? previousMaxMana : -1);
   playerManaBar.setAttribute('aria-label', `Your mana: ${playerCurrentMana} of ${playerMaxMana}`);
   updateHeroPowerAvailability();
@@ -157,7 +164,7 @@ function startOpponentTurn() {
   opponentMaxMana = Math.min(10, opponentMaxMana + 1);
   opponentCurrentMana = opponentMaxMana;
   opponentManaCount.textContent = `${opponentCurrentMana} / ${opponentMaxMana}`;
-  opponentManaCrystals.forEach((crystal, index) => crystal.classList.toggle('filled', index < opponentMaxMana));
+  updateManaCrystals(opponentManaCrystals, opponentCurrentMana, opponentMaxMana);
   animateManaCrystals(opponentManaCrystals, opponentMaxMana, previousMaxMana < opponentMaxMana ? previousMaxMana : -1);
   opponentManaBar.setAttribute('aria-label', `Opponent mana: ${opponentCurrentMana} of ${opponentMaxMana}`);
 }
@@ -227,6 +234,7 @@ playerHeroPower.addEventListener('click', () => {
 
   playerCurrentMana -= HERO_POWER_COST;
   playerManaCount.textContent = `${playerCurrentMana} / ${playerMaxMana}`;
+  updateManaCrystals(playerManaCrystals, playerCurrentMana, playerMaxMana);
   playerManaBar.setAttribute('aria-label', `Your mana: ${playerCurrentMana} of ${playerMaxMana}`);
   soldiers.push({ hasAttacked: false, summoningSick: true });
   renderSoldiers();
