@@ -14,6 +14,7 @@ const playerDeck = document.querySelector('.player-deck');
 const playerDeckCount = playerDeck.querySelector('.deck-count');
 const opponentDeck = document.querySelector('.opponent-deck');
 const opponentDeckCount = opponentDeck.querySelector('.deck-count');
+const playerHand = document.querySelector('.player-hand-cards');
 const soldiers = [];
 let playerMaxMana = 0;
 let playerCurrentMana = 0;
@@ -66,15 +67,24 @@ function animateManaCrystals(crystals, activeCount, newCrystalIndex) {
 
 function drawCardFromDeck(deck, countElement, owner) {
   const currentCount = owner === 'player' ? playerDeckCards : opponentDeckCards;
+  if (currentCount <= 0) return false;
   const nextCount = Math.max(0, currentCount - 1);
   if (owner === 'player') playerDeckCards = nextCount;
   else opponentDeckCards = nextCount;
   countElement.textContent = `${nextCount} cards`;
   deck.setAttribute('aria-label', `${owner === 'player' ? 'Your' : 'Opponent'} deck: ${nextCount} cards`);
+  return true;
+}
+
+function addBlankCardToHand() {
+  const card = document.createElement('div');
+  card.className = 'hand-card hand-card-blank';
+  card.setAttribute('aria-label', 'Blank card');
+  playerHand.appendChild(card);
 }
 
 function startPlayerTurn() {
-  drawCardFromDeck(playerDeck, playerDeckCount, 'player');
+  if (drawCardFromDeck(playerDeck, playerDeckCount, 'player')) addBlankCardToHand();
   soldiers.forEach((soldier) => {
     soldier.hasAttacked = false;
     soldier.summoningSick = false;
