@@ -10,11 +10,17 @@ const playerManaCrystals = [...playerManaBar.querySelectorAll('.crystal')];
 const opponentManaBar = document.querySelector('.opponent-mana-bar');
 const opponentManaCount = opponentManaBar.querySelector('.mana-count');
 const opponentManaCrystals = [...opponentManaBar.querySelectorAll('.crystal')];
+const playerDeck = document.querySelector('.player-deck');
+const playerDeckCount = playerDeck.querySelector('.deck-count');
+const opponentDeck = document.querySelector('.opponent-deck');
+const opponentDeckCount = opponentDeck.querySelector('.deck-count');
 const soldiers = [];
 let playerMaxMana = 0;
 let playerCurrentMana = 0;
 let opponentMaxMana = 0;
 let opponentCurrentMana = 0;
+let playerDeckCards = 30;
+let opponentDeckCards = 30;
 let activeArrow = null;
 let activeArrowHead = null;
 let arrowStart = null;
@@ -58,7 +64,17 @@ function animateManaCrystals(crystals, activeCount, newCrystalIndex) {
   });
 }
 
+function drawCardFromDeck(deck, countElement, owner) {
+  const currentCount = owner === 'player' ? playerDeckCards : opponentDeckCards;
+  const nextCount = Math.max(0, currentCount - 1);
+  if (owner === 'player') playerDeckCards = nextCount;
+  else opponentDeckCards = nextCount;
+  countElement.textContent = `${nextCount} cards`;
+  deck.setAttribute('aria-label', `${owner === 'player' ? 'Your' : 'Opponent'} deck: ${nextCount} cards`);
+}
+
 function startPlayerTurn() {
+  drawCardFromDeck(playerDeck, playerDeckCount, 'player');
   soldiers.forEach((soldier) => {
     soldier.hasAttacked = false;
     soldier.summoningSick = false;
@@ -75,6 +91,7 @@ function startPlayerTurn() {
 }
 
 function startOpponentTurn() {
+  drawCardFromDeck(opponentDeck, opponentDeckCount, 'opponent');
   const previousMaxMana = opponentMaxMana;
   opponentMaxMana = Math.min(10, opponentMaxMana + 1);
   opponentCurrentMana = opponentMaxMana;
