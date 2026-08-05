@@ -170,8 +170,29 @@ function addBlankCardToHand() {
   animateCardDraw(card);
 }
 
+function showBurnedCard() {
+  handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning');
+  handPreview.setAttribute('aria-hidden', 'false');
+  window.requestAnimationFrame(() => {
+    handPreview.classList.add('hand-card-preview-visible', 'hand-card-preview-burning');
+  });
+  window.setTimeout(() => {
+    handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning');
+    handPreview.setAttribute('aria-hidden', 'true');
+  }, 980);
+}
+
+function drawPlayerCard() {
+  if (!drawCardFromDeck(playerDeck, playerDeckCount, 'player')) return;
+  if (playerHand.children.length >= MAX_HAND_SIZE) {
+    showBurnedCard();
+    return;
+  }
+  addBlankCardToHand();
+}
+
 function startPlayerTurn() {
-  if (drawCardFromDeck(playerDeck, playerDeckCount, 'player')) addBlankCardToHand();
+  drawPlayerCard();
   soldiers.forEach((soldier) => {
     soldier.hasAttacked = false;
     soldier.summoningSick = false;
