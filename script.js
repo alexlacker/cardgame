@@ -175,6 +175,7 @@ function playSoldierCard(card) {
     return;
   }
 
+  const sourceRect = card.getBoundingClientRect();
   playerCurrentMana -= 1;
   playerManaCount.textContent = `${playerCurrentMana} / ${playerMaxMana}`;
   updateManaCrystals(playerManaCrystals, playerCurrentMana, playerMaxMana);
@@ -186,6 +187,18 @@ function playSoldierCard(card) {
   arrangePlayerHand();
   soldiers.push({ hasAttacked: false, summoningSick: true });
   renderSoldiers();
+  const soldierIndex = soldiers.length - 1;
+  const target = playerLane.querySelector(`[data-soldier-index="${soldierIndex}"]`);
+  if (!target) return;
+  const targetRect = target.getBoundingClientRect();
+  target.style.setProperty('--summon-x', `${sourceRect.left + sourceRect.width / 2 - targetRect.left - targetRect.width / 2}px`);
+  target.style.setProperty('--summon-y', `${sourceRect.top + sourceRect.height / 2 - targetRect.top - targetRect.height / 2}px`);
+  target.classList.add('creature-summoning');
+  window.setTimeout(() => {
+    target.classList.remove('creature-summoning');
+    target.style.removeProperty('--summon-x');
+    target.style.removeProperty('--summon-y');
+  }, 820);
 }
 
 function addBlankCardToHand() {

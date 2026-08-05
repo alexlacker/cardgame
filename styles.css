@@ -97,11 +97,13 @@ button { font: inherit; }
 .slot-ring { width: clamp(38px, 7vw, 72px); aspect-ratio: 5 / 7; border: 0; border-radius: 8px; background: transparent; box-shadow: none; }
 .slot-ring.occupied { position: relative; z-index: 8; display: grid; place-items: center; align-content: center; gap: 4px; visibility: visible; opacity: 1 !important; border: 3px solid #67482f; border-radius: 10px; color: #f4dfbd; background: linear-gradient(145deg, #9b794e, #60442d 68%, #3d2b22); box-shadow: 0 4px 9px #3d231899, inset 0 0 0 2px #d4aa6e66; font-family: Cinzel, serif; text-align: center; }
 .slot-ring.occupied, .slot-ring.occupied:focus, .slot-ring.occupied:active { outline: none; user-select: none; -webkit-tap-highlight-color: transparent; }
-.player-lane .slot-ring.occupied { width: clamp(58px, 9vw, 102px); height: clamp(88px, 13vw, 145px); transform: translateY(-72px); }
+.player-lane .slot-ring.occupied { --slot-lift: -72px; width: clamp(58px, 9vw, 102px); height: clamp(88px, 13vw, 145px); transform: translateY(var(--slot-lift)); }
 .player-lane .slot-ring.occupied:not(.has-attacked):not(.summoning-sick) { box-shadow: 0 0 0 3px #64f58d, 0 0 14px #41df75aa, 0 4px 9px #3d231899, inset 0 0 0 2px #d4aa6e66; }
 .player-lane .slot-ring.has-attacked { filter: none; opacity: 1; }
 .player-lane .slot-ring.occupied.creature-attacking { z-index: 100 !important; animation: creatureAttack .98s cubic-bezier(.25,.7,.3,1) both; box-shadow: 0 0 0 3px #f1c777, 0 0 22px #f4bd5aaa, 0 7px 15px #3d231899, inset 0 0 0 2px #f3d08a88; }
 @keyframes creatureAttack { 0% { transform: translateY(-72px) scale(1); } 15% { transform: translateY(-94px) scale(1.12); } 35% { transform: translate(var(--attack-x), calc(var(--attack-y) - 22px)) scale(1.12); } 75% { transform: translateY(-94px) scale(1.08); } 100% { transform: translateY(-72px) scale(1); } }
+.player-lane .slot-ring.occupied.creature-summoning { z-index: 100 !important; animation: creatureSummon .82s cubic-bezier(.2,.75,.28,1) both; }
+@keyframes creatureSummon { 0% { opacity: .2; transform: translate(var(--summon-x), calc(var(--summon-y) + var(--slot-lift))) scale(.72); } 42% { opacity: 1; transform: translateY(calc(var(--slot-lift) - 18px)) scale(1.04); } 58% { opacity: 1; transform: translateY(calc(var(--slot-lift) - 18px)) scale(1.04); } 70% { opacity: 1; transform: translateY(calc(var(--slot-lift) + 8px)) scale(1.1); } 84% { transform: translateY(calc(var(--slot-lift) - 3px)) scale(.98); } 100% { opacity: 1; transform: translateY(var(--slot-lift)) scale(1); } }
 .unit-name { position: absolute; top: 10px; font-size: clamp(9px, 1.2vw, 14px); font-weight: 800; letter-spacing: .04em; }
 .soldier-art { width: clamp(42px, 5vw, 56px); height: clamp(52px, 6vw, 70px); fill: none; stroke: #f2d28b; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 2px #2e1b12); }
 .soldier-art .sword-blade { fill: #f8e6b0; stroke: #fff4cf; stroke-width: 1; filter: drop-shadow(0 0 2px #f3c96e); }
@@ -269,7 +271,7 @@ button { font: inherit; }
   .slot-ring { width: 45px; }
   .player-lane { grid-template-columns: repeat(13, minmax(0, 1fr)); gap: 0; padding: 0 8%; }
   .player-lane .slot-ring { width: 100%; justify-self: center; }
-  .player-lane .slot-ring.occupied { width: 72px; height: 106px; transform: translateY(-50px); }
+  .player-lane .slot-ring.occupied { --slot-lift: -50px; width: 72px; height: 106px; transform: translateY(var(--slot-lift)); }
   .hint { display: none; }
   .brand-title { font-size: 17px; }
 }
