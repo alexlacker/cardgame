@@ -33,6 +33,8 @@ let attackingSoldier = null;
 let attackingSoldierState = null;
 let opponentHeroHp = 30;
 let activeAttackWarning = null;
+let burnRevealTimer = null;
+let burnFinishTimer = null;
 
 function showAttackWarning(soldier) {
   if (activeAttackWarning) activeAttackWarning.remove();
@@ -171,15 +173,20 @@ function addBlankCardToHand() {
 }
 
 function showBurnedCard() {
+  window.clearTimeout(burnRevealTimer);
+  window.clearTimeout(burnFinishTimer);
   handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning');
   handPreview.setAttribute('aria-hidden', 'false');
   window.requestAnimationFrame(() => {
-    handPreview.classList.add('hand-card-preview-visible', 'hand-card-preview-burning');
+    handPreview.classList.add('hand-card-preview-visible');
   });
-  window.setTimeout(() => {
+  burnRevealTimer = window.setTimeout(() => {
+    handPreview.classList.add('hand-card-preview-burning');
+  }, 2000);
+  burnFinishTimer = window.setTimeout(() => {
     handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning');
     handPreview.setAttribute('aria-hidden', 'true');
-  }, 980);
+  }, 2980);
 }
 
 function drawPlayerCard() {
