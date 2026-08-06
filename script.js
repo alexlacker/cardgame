@@ -330,6 +330,8 @@ function renderSoldiers() {
     slot.innerHTML = '';
     slot.onpointerenter = null;
     slot.onpointerleave = null;
+    slot.onmouseenter = null;
+    slot.onmouseleave = null;
   });
 
   centeredLayouts[soldiers.length].forEach((slotIndex, soldierIndex) => {
@@ -340,6 +342,8 @@ function renderSoldiers() {
     slots[slotIndex].innerHTML = soldierMarkup;
     slots[slotIndex].onpointerenter = () => showCreaturePreview(slots[slotIndex]);
     slots[slotIndex].onpointerleave = hideCreaturePreview;
+    slots[slotIndex].onmouseenter = () => showCreaturePreview(slots[slotIndex]);
+    slots[slotIndex].onmouseleave = hideCreaturePreview;
   });
 }
 
