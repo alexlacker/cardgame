@@ -37,6 +37,7 @@ let activeAttackWarning = null;
 let activeDamageIndicator = null;
 let burnRevealTimer = null;
 let burnFinishTimer = null;
+let creaturePreviewTimer = null;
 
 function showAttackWarning(soldier) {
   if (activeAttackWarning) activeAttackWarning.remove();
@@ -369,6 +370,26 @@ playerHeroPower.addEventListener('click', () => {
 });
 
 startPlayerTurn();
+
+playerLane.addEventListener('pointerover', (event) => {
+  const soldier = event.target.closest('.slot-ring.occupied');
+  if (!soldier || !playerLane.contains(soldier) || (event.relatedTarget && soldier.contains(event.relatedTarget))) return;
+  window.clearTimeout(creaturePreviewTimer);
+  creaturePreviewTimer = window.setTimeout(() => {
+    setHandPreviewContent(`<span class="hand-card-cost">1</span>${soldierMarkup}`);
+    handPreview.classList.add('hand-card-preview-visible');
+    handPreview.setAttribute('aria-hidden', 'false');
+  }, 250);
+});
+
+playerLane.addEventListener('pointerout', (event) => {
+  const soldier = event.target.closest('.slot-ring.occupied');
+  if (!soldier || !playerLane.contains(soldier) || (event.relatedTarget && soldier.contains(event.relatedTarget))) return;
+  window.clearTimeout(creaturePreviewTimer);
+  handPreview.classList.remove('hand-card-preview-visible');
+  handPreview.setAttribute('aria-hidden', 'true');
+  handPreview.innerHTML = '';
+});
 
 playerLane.addEventListener('pointerdown', (event) => {
   const soldier = event.target.closest('.slot-ring.occupied');
