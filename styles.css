@@ -161,9 +161,9 @@ button { font: inherit; }
 @keyframes drawCardFlight { 0% { opacity: 0; transform: translate(0, 0) rotate(-4deg) rotateY(0) scale(.72); } 15% { opacity: 1; } 100% { opacity: 1; transform: translate(var(--draw-x), var(--draw-y)) rotate(var(--draw-rotation)) rotateY(180deg) scale(1); } }
 @keyframes drawCardBackFace { 0%, 38% { opacity: 1; } 58%, 100% { opacity: 0; } }
 @keyframes drawCardFrontFace { 0%, 38% { opacity: 0; } 58%, 100% { opacity: 1; } }
-.hand-card-preview { position: absolute; left: 50%; bottom: 26%; z-index: 1000; width: clamp(120px, 14vw, 190px); height: clamp(170px, 22vw, 270px); border: 4px solid #3f2b22; border-radius: 11px; background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); box-shadow: 0 18px 36px #1f120ecc, 0 0 0 3px #f1c777, inset 0 0 0 3px #e1bc8366; opacity: 0; visibility: hidden; pointer-events: none; transform: translate(-50%, 22px) scale(.9); transition: opacity .2s ease, transform .2s ease, visibility .2s ease; }
+.hand-card-preview { position: absolute; left: 50%; top: 50%; z-index: 1000; width: clamp(120px, 14vw, 190px); height: clamp(170px, 22vw, 270px); border: 4px solid #3f2b22; border-radius: 11px; background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); box-shadow: 0 18px 36px #1f120ecc, 0 0 0 3px #f1c777, inset 0 0 0 3px #e1bc8366; opacity: 0; visibility: hidden; pointer-events: none; transform: translate(-50%, calc(-50% + 22px)) scale(.9); transition: opacity .2s ease, transform .2s ease, visibility .2s ease; }
 .hand-card-preview::after { content: ""; position: absolute; inset: 12px; border: 1px solid #e0b87d88; border-radius: 7px; }
-.hand-card-preview.hand-card-preview-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1); }
+.hand-card-preview.hand-card-preview-visible { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
 .hand-preview-soldier { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 5px; color: #f4dfbd; font-family: Cinzel, serif; text-align: center; pointer-events: none; }
 .hand-preview-soldier .unit-name { top: 18px; font-size: clamp(11px, 1.5vw, 18px); }
 .hand-preview-soldier .soldier-art { width: clamp(54px, 6vw, 76px); height: clamp(66px, 8vw, 94px); }
@@ -171,7 +171,7 @@ button { font: inherit; }
 .hand-preview-soldier .hand-card-cost { top: 8px; left: 8px; width: 30px; height: 30px; font-size: 16px; }
 .hand-card-preview.hand-card-preview-burning { animation: handCardMelt 1.25s linear both; }
 .hand-card-preview.hand-card-preview-burning::before { content: ""; position: absolute; left: -3px; right: -3px; bottom: 0; z-index: 2; height: 28px; border-radius: 45% 45% 30% 30%; background: linear-gradient(to bottom, #ff4b1c 0%, #ff7620 38%, #ffd05a 82%, #fff1a0 100%); box-shadow: 0 0 10px #ff5a1f, 0 3px 16px #ff9a2aaa; filter: blur(1px); pointer-events: none; animation: handCardMeltEdge 1.25s linear both; }
-@keyframes handCardMelt { 0% { opacity: 1; clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); transform: translate(-50%, 0) scale(1); filter: none; } 35% { opacity: 1; clip-path: inset(0 0 16% 0); -webkit-clip-path: inset(0 0 16% 0); transform: translate(-50%, 0) scale(1); filter: none; } 70% { opacity: 1; clip-path: inset(0 0 58% 0); -webkit-clip-path: inset(0 0 58% 0); transform: translate(-50%, 0) scale(1); filter: none; } 100% { opacity: 0; clip-path: inset(0 0 100% 0); -webkit-clip-path: inset(0 0 100% 0); transform: translate(-50%, 0) scale(1); filter: none; } }
+@keyframes handCardMelt { 0% { opacity: 1; clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); transform: translate(-50%, -50%) scale(1); filter: none; } 35% { opacity: 1; clip-path: inset(0 0 16% 0); -webkit-clip-path: inset(0 0 16% 0); transform: translate(-50%, -50%) scale(1); filter: none; } 70% { opacity: 1; clip-path: inset(0 0 58% 0); -webkit-clip-path: inset(0 0 58% 0); transform: translate(-50%, -50%) scale(1); filter: none; } 100% { opacity: 0; clip-path: inset(0 0 100% 0); -webkit-clip-path: inset(0 0 100% 0); transform: translate(-50%, -50%) scale(1); filter: none; } }
 @keyframes handCardMeltEdge { 0% { bottom: 0; opacity: 1; } 35% { bottom: 16%; opacity: 1; } 70% { bottom: 58%; opacity: 1; } 100% { bottom: 100%; opacity: 0; } }
 .hand-card-preview.hand-card-preview-melted { opacity: 0 !important; visibility: hidden !important; clip-path: inset(0 0 100% 0) !important; -webkit-clip-path: inset(0 0 100% 0) !important; }
 .deck-stack { position: absolute; right: 2%; z-index: 4; isolation: isolate; display: grid; place-items: center; align-content: center; width: clamp(72px, 8vw, 102px); height: clamp(104px, 14vw, 146px); border: 2px solid #101827; border-radius: 10px; color: #f4dfbd; background: conic-gradient(#0b1220 25%, #24507b 0 50%, #0b1220 0 75%, #24507b 0) 0 0 / 16px 16px repeat; box-shadow: 0 0 0 1px #5d8fbd88, 0 6px 14px #10182799, inset 0 0 0 2px #6b9bc455; font-family: Cinzel, serif; pointer-events: none; }
@@ -248,7 +248,7 @@ button { font: inherit; }
   .opponent-hand-placeholder { top: -108px; bottom: auto; }
   .player-hand-cards { bottom: 18px; width: calc(100vw - 40px); max-width: 440px; }
   .hand-card-blank { flex-basis: 54px; height: 78px; border-width: 2px; }
-  .hand-card-preview { width: 130px; height: 185px; bottom: 25%; }
+  .hand-card-preview { width: 130px; height: 185px; top: 50%; }
   .hand-card-blank::after { inset: 6px; }
   .hero-hit-zone { width: 142px; height: 76px; border-radius: 25px; font-size: 18px; }
   .hero-hit-zone::after { border-radius: 17px; }
