@@ -16,6 +16,7 @@ const playerDeckCount = playerDeck.querySelector('.deck-count');
 const opponentDeck = document.querySelector('.opponent-deck');
 const opponentDeckCount = opponentDeck.querySelector('.deck-count');
 const playerHand = document.querySelector('.player-hand-cards');
+const opponentHand = document.querySelector('.opponent-hand-cards');
 const handPreview = document.querySelector('.hand-card-preview');
 const soldiers = [];
 const MAX_HAND_SIZE = 10;
@@ -26,6 +27,7 @@ let opponentMaxMana = 0;
 let opponentCurrentMana = 0;
 let playerDeckCards = 30;
 let opponentDeckCards = 30;
+let opponentHandCards = 0;
 let activeArrow = null;
 let activeArrowHead = null;
 let arrowStart = null;
@@ -138,9 +140,10 @@ function arrangePlayerHand() {
   });
 }
 
-function animateCardDraw(card) {
+function animateCardDraw(card, owner = 'player') {
   const boardRect = board.getBoundingClientRect();
-  const deckRect = playerDeck.getBoundingClientRect();
+  const deck = owner === 'opponent' ? opponentDeck : playerDeck;
+  const deckRect = deck.getBoundingClientRect();
   const targetRect = card.getBoundingClientRect();
   const cardWidth = card.offsetWidth;
   const cardHeight = card.offsetHeight;
@@ -163,6 +166,27 @@ function animateCardDraw(card) {
     flight.remove();
     card.classList.remove('hand-card-drawing');
   }, 620);
+}
+
+function arrangeOpponentHand() {
+  const cards = [...opponentHand.children];
+  const availableWidth = opponentHand.clientWidth || 600;
+  const cardWidth = cards[0]?.offsetWidth || 0;
+  const desiredGap = 10;
+  const gap = cards.length > 1
+    ? Math.min(desiredGap, (availableWidth - cardWidth * cards.length) / (cards.length - 1))
+    : 0;
+  const center = (cards.length - 1) / 2;
+  const rotationStep = Math.min(3.5, 35 / Math.max(1, cards.length - 1));
+  cards.forEach((card, index) => {
+    const offset = index - center;
+    const lift = Math.min(30, Math.abs(offset) * 3);
+    const rotation = offset * rotationStep;
+    card.style.marginLeft = index === 0 ? '0px' : `${gap}px`;
+    card.style.setProperty('--hand-rotation', `${rotation}deg`);
+    card.style.transform = `translateY(${lift}px) rotate(${rotation}deg)`;
+    card.style.zIndex = String(index + 1);
+  });
 }
 
 function setHandPreviewContent(content) {
@@ -249,6 +273,16 @@ function addBlankCardToHand() {
   animateCardDraw(card);
 }
 
+function addOpponentCardToHand() {
+  if (opponentHandCards >= MAX_HAND_SIZE) return;
+  const card = document.createElement('div');
+  card.className = 'opponent-hand-card';
+  card.setAttribute('aria-label', 'Opponent card back');
+  opponentHand.appendChild(card);
+  arrangeOpponentHand();
+  animateCardDraw(card, 'opponent');
+}
+
 function showBurnedCard() {
   window.clearTimeout(burnRevealTimer);
   window.clearTimeout(burnFinishTimer);
@@ -280,6 +314,16 @@ function drawPlayerCard() {
   addBlankCardToHand();
 }
 
+function drawOpponentCard() {
+  if (!drawCardFromDeck(opponentDeck, opponentDeckCount, 'opponent')) return;
+  if (opponentHandCards >= MAX_HAND_SIZE) {
+    showBurnedCard();
+    return;
+  }
+  opponentHandCards += 1;
+  addOpponentCardToHand();
+}
+
 function startPlayerTurn() {
   drawPlayerCard();
   soldiers.forEach((soldier) => {
@@ -299,7 +343,7 @@ function startPlayerTurn() {
 }
 
 function startOpponentTurn() {
-  drawCardFromDeck(opponentDeck, opponentDeckCount, 'opponent');
+  drawOpponentCard();
   const previousMaxMana = opponentMaxMana;
   opponentMaxMana = Math.min(10, opponentMaxMana + 1);
   opponentCurrentMana = opponentMaxMana;
