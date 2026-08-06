@@ -153,6 +153,7 @@ function animateCardDraw(card, owner = 'player') {
   const targetY = targetRect.top + targetRect.height / 2 - boardRect.top;
   const flight = document.createElement('div');
   flight.className = 'draw-card-flight';
+  if (owner === 'opponent') flight.classList.add('draw-card-flight-opponent');
   flight.style.left = `${startX - cardWidth / 2}px`;
   flight.style.top = `${startY - cardHeight / 2}px`;
   flight.style.width = `${cardWidth}px`;

@@ -161,6 +161,8 @@ button { font: inherit; }
 .draw-card-flight::before, .draw-card-flight::after { content: ""; position: absolute; inset: 0; border: 3px solid #101827; border-radius: 8px; backface-visibility: visible; box-shadow: 0 8px 16px #101827aa, 0 0 0 2px #5d8fbd88, inset 0 0 0 2px #6b9bc455; }
 .draw-card-flight::before { background: conic-gradient(#0b1220 25%, #24507b 0 50%, #0b1220 0 75%, #24507b 0) 0 0 / 14px 14px repeat; animation: drawCardBackFace .62s ease both; }
 .draw-card-flight::after { background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); transform: rotateY(180deg); animation: drawCardFrontFace .62s ease both; }
+.draw-card-flight-opponent::before { opacity: 1 !important; animation: none !important; }
+.draw-card-flight-opponent::after { opacity: 0 !important; animation: none !important; }
 @keyframes drawCardFlight { 0% { opacity: 0; transform: translate(0, 0) rotate(-4deg) rotateY(0) scale(.72); } 15% { opacity: 1; } 100% { opacity: 1; transform: translate(var(--draw-x), var(--draw-y)) rotate(var(--draw-rotation)) rotateY(180deg) scale(1); } }
 @keyframes drawCardBackFace { 0%, 38% { opacity: 1; } 58%, 100% { opacity: 0; } }
 @keyframes drawCardFrontFace { 0%, 38% { opacity: 0; } 58%, 100% { opacity: 1; } }
