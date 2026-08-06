@@ -169,6 +169,22 @@ function setHandPreviewContent(content) {
   handPreview.innerHTML = `<div class="hand-preview-soldier">${content}</div>`;
 }
 
+function showCreaturePreview(soldier) {
+  window.clearTimeout(creaturePreviewTimer);
+  creaturePreviewTimer = window.setTimeout(() => {
+    setHandPreviewContent(`<span class="hand-card-cost">1</span>${soldierMarkup}`);
+    handPreview.classList.add('hand-card-preview-visible');
+    handPreview.setAttribute('aria-hidden', 'false');
+  }, 250);
+}
+
+function hideCreaturePreview() {
+  window.clearTimeout(creaturePreviewTimer);
+  handPreview.classList.remove('hand-card-preview-visible');
+  handPreview.setAttribute('aria-hidden', 'true');
+  handPreview.innerHTML = '';
+}
+
 function playSoldierCard(card) {
   if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < 1 || soldiers.length >= 7) {
     card.classList.add('hand-card-unplayable');
@@ -312,6 +328,8 @@ function renderSoldiers() {
     const slotType = slot.classList.contains('secondary-slot') ? 'secondary-slot' : 'primary-slot';
     slot.className = `slot-ring ${slotType}`;
     slot.innerHTML = '';
+    slot.onpointerenter = null;
+    slot.onpointerleave = null;
   });
 
   centeredLayouts[soldiers.length].forEach((slotIndex, soldierIndex) => {
@@ -320,6 +338,8 @@ function renderSoldiers() {
     if (soldiers[soldierIndex].hasAttacked) slots[slotIndex].classList.add('has-attacked');
     if (soldiers[soldierIndex].summoningSick) slots[slotIndex].classList.add('summoning-sick');
     slots[slotIndex].innerHTML = soldierMarkup;
+    slots[slotIndex].onpointerenter = () => showCreaturePreview(slots[slotIndex]);
+    slots[slotIndex].onpointerleave = hideCreaturePreview;
   });
 }
 
@@ -370,26 +390,6 @@ playerHeroPower.addEventListener('click', () => {
 });
 
 startPlayerTurn();
-
-playerLane.addEventListener('pointerover', (event) => {
-  const soldier = event.target.closest('.slot-ring.occupied');
-  if (!soldier || !playerLane.contains(soldier) || (event.relatedTarget && soldier.contains(event.relatedTarget))) return;
-  window.clearTimeout(creaturePreviewTimer);
-  creaturePreviewTimer = window.setTimeout(() => {
-    setHandPreviewContent(`<span class="hand-card-cost">1</span>${soldierMarkup}`);
-    handPreview.classList.add('hand-card-preview-visible');
-    handPreview.setAttribute('aria-hidden', 'false');
-  }, 250);
-});
-
-playerLane.addEventListener('pointerout', (event) => {
-  const soldier = event.target.closest('.slot-ring.occupied');
-  if (!soldier || !playerLane.contains(soldier) || (event.relatedTarget && soldier.contains(event.relatedTarget))) return;
-  window.clearTimeout(creaturePreviewTimer);
-  handPreview.classList.remove('hand-card-preview-visible');
-  handPreview.setAttribute('aria-hidden', 'true');
-  handPreview.innerHTML = '';
-});
 
 playerLane.addEventListener('pointerdown', (event) => {
   const soldier = event.target.closest('.slot-ring.occupied');
