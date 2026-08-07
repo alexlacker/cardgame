@@ -147,6 +147,9 @@ button { font: inherit; }
 .opponent-hand-card.hand-card-drawing { opacity: 0 !important; }
 .hand-card-blank { position: relative; flex: 0 0 clamp(56px, 6vw, 84px); height: clamp(80px, 9vw, 120px); margin-left: 0; border: 3px solid #3f2b22; border-radius: 8px; background: linear-gradient(145deg, #b58a5d, #6b482f 68%, #3a2821); box-shadow: -2px 3px 0 #c39a68, 0 7px 14px #2e1c1499, inset 0 0 0 2px #e1bc8366; transform-origin: bottom center; transition: transform .25s ease, filter .25s ease, box-shadow .25s ease; pointer-events: auto; cursor: pointer; }
 .hand-card-blank.hand-card-drawing { opacity: 0 !important; }
+.hand-card-blank.hand-card-dragging { opacity: .28; }
+.hand-card-drag-ghost { position: fixed !important; z-index: 1200 !important; margin: 0 !important; opacity: .96; pointer-events: none !important; transform: translate(-50%, -50%) rotate(-2deg) scale(1.05) !important; transition: none !important; }
+.player-lane .slot-ring.drop-target { outline: 3px solid #73f6a0; outline-offset: 4px; box-shadow: 0 0 0 3px #64f58d, 0 0 18px #41df75cc, 0 4px 9px #3d231899, inset 0 0 0 2px #d4aa6e66; }
 .hand-card-blank.hand-card-hovered { z-index: 100 !important; filter: brightness(1.08); box-shadow: 0 8px 18px #2e1c14aa, 0 0 0 2px #f1c777, inset 0 0 0 2px #f6d89a; }
 .hand-card-blank:first-child { margin-left: 0; }
 .hand-card-blank::after { content: ""; position: absolute; inset: 9px; border: 1px solid #e0b87d66; border-radius: 5px; }

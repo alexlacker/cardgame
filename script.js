@@ -40,6 +40,10 @@ let activeDamageIndicator = null;
 let burnRevealTimer = null;
 let burnFinishTimer = null;
 let creaturePreviewTimer = null;
+let draggedHandCard = null;
+let handCardDragGhost = null;
+let handCardDropTarget = null;
+let isDraggingHandCard = false;
 
 function showAttackWarning(soldier) {
   if (activeAttackWarning) activeAttackWarning.remove();
@@ -138,6 +142,73 @@ function arrangePlayerHand() {
     card.style.transform = `translateY(-${lift}px) rotate(${rotation}deg)`;
     card.style.zIndex = String(index + 1);
   });
+}
+
+function clearHandCardDropTarget() {
+  if (handCardDropTarget) handCardDropTarget.classList.remove('drop-target');
+  handCardDropTarget = null;
+}
+
+function updateHandCardDropTarget(clientX, clientY) {
+  clearHandCardDropTarget();
+  if (!isDraggingHandCard || soldiers.length >= 7 || !pointIsInside(playerLane, clientX, clientY)) return;
+  const nextLayout = centeredLayouts[soldiers.length + 1];
+  const nextSlotIndex = nextLayout?.[soldiers.length];
+  const slot = playerLane.querySelectorAll('.slot-ring')[nextSlotIndex];
+  if (!slot) return;
+  handCardDropTarget = slot;
+  handCardDropTarget.classList.add('drop-target');
+}
+
+function beginHandCardDrag(card, event) {
+  if (event.button !== 0) return;
+  if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < 1 || soldiers.length >= 7) {
+    card.classList.add('hand-card-unplayable');
+    window.setTimeout(() => card.classList.remove('hand-card-unplayable'), 350);
+    return;
+  }
+
+  event.preventDefault();
+  draggedHandCard = card;
+  isDraggingHandCard = true;
+  card.classList.add('hand-card-dragging');
+  handPreview.classList.remove('hand-card-preview-visible');
+  handPreview.setAttribute('aria-hidden', 'true');
+  handPreview.innerHTML = '';
+
+  const cardRect = card.getBoundingClientRect();
+  handCardDragGhost = card.cloneNode(true);
+  handCardDragGhost.classList.add('hand-card-drag-ghost');
+  handCardDragGhost.classList.remove('hand-card-hovered');
+  handCardDragGhost.style.width = `${cardRect.width}px`;
+  handCardDragGhost.style.height = `${cardRect.height}px`;
+  document.body.appendChild(handCardDragGhost);
+  handCardDragGhost.style.left = `${event.clientX}px`;
+  handCardDragGhost.style.top = `${event.clientY}px`;
+  card.setPointerCapture?.(event.pointerId);
+  updateHandCardDropTarget(event.clientX, event.clientY);
+}
+
+function updateHandCardDrag(event) {
+  if (!isDraggingHandCard || !handCardDragGhost) return;
+  handCardDragGhost.style.left = `${event.clientX}px`;
+  handCardDragGhost.style.top = `${event.clientY}px`;
+  updateHandCardDropTarget(event.clientX, event.clientY);
+}
+
+function finishHandCardDrag(event) {
+  if (!isDraggingHandCard) return;
+  const card = draggedHandCard;
+  const canDrop = Boolean(handCardDropTarget);
+  clearHandCardDropTarget();
+  isDraggingHandCard = false;
+  draggedHandCard = null;
+  card?.classList.remove('hand-card-dragging');
+  if (handCardDragGhost) {
+    handCardDragGhost.remove();
+    handCardDragGhost = null;
+  }
+  if (canDrop && card) playSoldierCard(card);
 }
 
 function animateCardDraw(card, owner = 'player') {
@@ -268,7 +339,11 @@ function addBlankCardToHand() {
     handPreview.innerHTML = '';
     arrangePlayerHand();
   });
-  card.addEventListener('click', () => playSoldierCard(card));
+  card.addEventListener('pointerdown', (event) => {
+    window.clearTimeout(hoverTimer);
+    card.classList.remove('hand-card-hovered');
+    beginHandCardDrag(card, event);
+  });
   playerHand.appendChild(card);
   arrangePlayerHand();
   animateCardDraw(card);
@@ -439,6 +514,10 @@ playerHeroPower.addEventListener('click', () => {
 });
 
 startPlayerTurn();
+
+window.addEventListener('pointermove', updateHandCardDrag);
+window.addEventListener('pointerup', finishHandCardDrag);
+window.addEventListener('pointercancel', finishHandCardDrag);
 
 playerLane.addEventListener('pointerdown', (event) => {
   const soldier = event.target.closest('.slot-ring.occupied');
