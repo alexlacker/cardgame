@@ -188,7 +188,7 @@ button { font: inherit; }
 .hand-preview-soldier .unit-name { top: 18px; font-size: clamp(11px, 1.5vw, 18px); }
 .hand-preview-soldier .soldier-art { width: clamp(54px, 6vw, 76px); height: clamp(66px, 8vw, 94px); }
 .hand-preview-soldier .unit-stats { bottom: 17px; font-size: clamp(16px, 2vw, 25px); }
-.hand-preview-soldier .hand-card-cost { top: 8px; left: 8px; width: 30px; height: 30px; font-size: 16px; }
+.hand-preview-soldier .hand-card-cost { top: -13px; left: -13px; width: 30px; height: 30px; font-size: 16px; }
 .hand-preview-soldier .commander-name { top: 18px; font-size: clamp(10px, 1.4vw, 17px); }
 .hand-preview-soldier .commander-art { width: clamp(58px, 6.5vw, 82px); height: clamp(70px, 8.5vw, 104px); }
 .hand-preview-soldier .commander-effect { margin-top: 4px; font-size: clamp(9px, 1.1vw, 14px); }
