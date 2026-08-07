@@ -145,19 +145,13 @@ function arrangePlayerHand() {
 }
 
 function clearHandCardDropTarget() {
-  if (handCardDropTarget) handCardDropTarget.classList.remove('drop-target');
   handCardDropTarget = null;
 }
 
 function updateHandCardDropTarget(clientX, clientY) {
   clearHandCardDropTarget();
-  if (!isDraggingHandCard || soldiers.length >= 7 || !pointIsInside(playerLane, clientX, clientY)) return;
-  const nextLayout = centeredLayouts[soldiers.length + 1];
-  const nextSlotIndex = nextLayout?.[soldiers.length];
-  const slot = playerLane.querySelectorAll('.slot-ring')[nextSlotIndex];
-  if (!slot) return;
-  handCardDropTarget = slot;
-  handCardDropTarget.classList.add('drop-target');
+  if (!isDraggingHandCard || soldiers.length >= 7 || !pointIsInside(battlefield, clientX, clientY)) return;
+  handCardDropTarget = battlefield;
 }
 
 function beginHandCardDrag(card, event) {
