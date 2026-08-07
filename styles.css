@@ -164,8 +164,8 @@ button { font: inherit; }
 .commander-art { width: clamp(40px, 4.8vw, 56px); height: clamp(48px, 5.8vw, 68px); fill: none; stroke: #f2d28b; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 2px #2e1b12); }
 .commander-art .flag-pole { stroke: #8a5a35; stroke-width: 2.1; }
 .commander-art .red-flag { fill: #d9463f; stroke: #ff9b78; stroke-width: 1; }
-.commander-name { left: 50%; width: 100%; transform: translateX(-50%); font-size: clamp(6px, .7vw, 10px); line-height: 1.05; }
-.commander-effect { left: 50%; transform: translateX(-50%); color: #ffd98a; font: 700 clamp(5px, .62vw, 8px)/1.05 Inter, sans-serif; text-align: center; }
+.commander-name { font-size: clamp(6px, .7vw, 10px); line-height: 1.05; }
+.commander-effect { color: #ffd98a; font: 700 clamp(5px, .62vw, 8px)/1.05 Inter, sans-serif; text-align: center; }
 .slot-ring.occupied .commander-name { top: 7px; font-size: clamp(6px, .7vw, 10px); }
 .slot-ring.occupied .commander-art { position: absolute; top: 27px; left: 50%; width: clamp(30px, 3.8vw, 46px); height: clamp(26px, 4vw, 52px); transform: translateX(-42%); }
 .slot-ring.occupied .commander-effect { position: absolute; bottom: 31px; font-size: clamp(5px, .62vw, 8px); }
@@ -191,8 +191,8 @@ button { font: inherit; }
 .hand-preview-soldier .unit-stats { bottom: 17px; font-size: clamp(16px, 2vw, 25px); }
 .hand-preview-soldier .hand-card-cost { top: -13px; left: -13px; width: 30px; height: 30px; font-size: 16px; }
 .hand-preview-soldier .commander-name { top: 18px; font-size: clamp(10px, 1.4vw, 17px); }
-.hand-preview-soldier .commander-art { position: absolute; top: 58px; left: 50%; width: clamp(58px, 6.5vw, 82px); height: clamp(70px, 8.5vw, 104px); transform: translateX(-42%); }
-.hand-preview-soldier .commander-effect { position: absolute; bottom: 45px; margin: 0; font-size: clamp(9px, 1.1vw, 14px); }
+.hand-preview-soldier .commander-art { position: relative; left: 8%; width: clamp(58px, 6.5vw, 82px); height: clamp(70px, 8.5vw, 104px); }
+.hand-preview-soldier .commander-effect { margin-top: 4px; font-size: clamp(9px, 1.1vw, 14px); }
 .hand-card-preview.hand-card-preview-burning { animation: handCardMelt 1.25s linear both; }
 .hand-card-preview.hand-card-preview-burning::before { content: ""; position: absolute; left: -3px; right: -3px; bottom: 0; z-index: 2; height: 28px; border-radius: 45% 45% 30% 30%; background: linear-gradient(to bottom, #ff4b1c 0%, #ff7620 38%, #ffd05a 82%, #fff1a0 100%); box-shadow: 0 0 10px #ff5a1f, 0 3px 16px #ff9a2aaa; filter: blur(1px); pointer-events: none; animation: handCardMeltEdge 1.25s linear both; }
 @keyframes handCardMelt { 0% { opacity: 1; clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); transform: translate(-50%, -50%) scale(1); filter: none; } 35% { opacity: 1; clip-path: inset(0 0 16% 0); -webkit-clip-path: inset(0 0 16% 0); transform: translate(-50%, -50%) scale(1); filter: none; } 70% { opacity: 1; clip-path: inset(0 0 58% 0); -webkit-clip-path: inset(0 0 58% 0); transform: translate(-50%, -50%) scale(1); filter: none; } 100% { opacity: 0; clip-path: inset(0 0 100% 0); -webkit-clip-path: inset(0 0 100% 0); transform: translate(-50%, -50%) scale(1); filter: none; } }
