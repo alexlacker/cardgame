@@ -275,7 +275,7 @@ function addBlankCardToHand() {
 }
 
 function addOpponentCardToHand() {
-  if (opponentHandCards >= MAX_HAND_SIZE) return;
+  if (opponentHand.children.length >= MAX_HAND_SIZE) return;
   const card = document.createElement('div');
   card.className = 'opponent-hand-card';
   card.setAttribute('aria-label', 'Opponent card back');
@@ -317,7 +317,7 @@ function drawPlayerCard() {
 
 function drawOpponentCard() {
   if (!drawCardFromDeck(opponentDeck, opponentDeckCount, 'opponent')) return;
-  if (opponentHandCards >= MAX_HAND_SIZE) {
+  if (opponentHand.children.length >= MAX_HAND_SIZE) {
     showBurnedCard();
     return;
   }
