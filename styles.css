@@ -169,7 +169,7 @@ button { font: inherit; }
 .slot-ring.occupied .commander-name { top: 7px; font-size: clamp(6px, .7vw, 10px); }
 .slot-ring.occupied .commander-art { position: absolute; top: 27px; width: clamp(34px, 4vw, 48px); height: clamp(42px, 5vw, 58px); }
 .slot-ring.occupied .commander-effect { position: absolute; bottom: 25px; font-size: clamp(5px, .62vw, 8px); }
-.hand-card-cost { position: absolute; top: -9px; left: -9px; z-index: 2; display: grid; place-items: center; width: 24px; height: 24px; border: 2px solid #def6ff; border-radius: 50%; color: #fff; background: #4195bd; box-shadow: 0 0 5px #83ddf5aa; font: 800 12px/1 Inter, sans-serif; }
+.hand-card-cost { position: absolute; top: -13px; left: -13px; z-index: 2; display: grid; place-items: center; width: 24px; height: 24px; border: 2px solid #def6ff; border-radius: 50%; color: #fff; background: #4195bd; box-shadow: 0 0 5px #83ddf5aa; font: 800 12px/1 Inter, sans-serif; }
 .hand-card-unplayable { animation: handCardUnplayable .35s ease; }
 @keyframes handCardUnplayable { 0%, 100% { transform: translateY(-2px) rotate(var(--hand-rotation)); } 35% { transform: translateY(-2px) translateX(-5px) rotate(var(--hand-rotation)); } 70% { transform: translateY(-2px) translateX(5px) rotate(var(--hand-rotation)); } }
 .draw-card-flight { position: absolute; z-index: 90; border-radius: 8px; background: #3f2b22; pointer-events: none; perspective: 700px; transform-style: preserve-3d; animation: drawCardFlight .62s cubic-bezier(.35,.1,.65,1) both; }
