@@ -21,6 +21,22 @@ const handPreview = document.querySelector('.hand-card-preview');
 const soldiers = [];
 const MAX_HAND_SIZE = 10;
 const HERO_POWER_COST = 2;
+const CARD_LIBRARY = {
+  soldier: { name: 'SOLDIER', manaCost: 1, attack: 1, health: 1 },
+  aggressiveCommander: {
+    name: 'AGGRESSIVE COMMANDER',
+    manaCost: 4,
+    attack: 3,
+    health: 2,
+    description: 'Other units +1 attack while alive',
+  },
+};
+const buildDeck = () => [
+  ...Array(26).fill('soldier'),
+  ...Array(4).fill('aggressiveCommander'),
+].sort(() => Math.random() - 0.5);
+const playerDeckTypes = buildDeck();
+const opponentDeckTypes = buildDeck();
 let playerMaxMana = 0;
 let playerCurrentMana = 0;
 let opponentMaxMana = 0;
@@ -123,6 +139,15 @@ function drawCardFromDeck(deck, countElement, owner) {
   return true;
 }
 
+function getCardDefinition(cardType) {
+  return CARD_LIBRARY[cardType] || CARD_LIBRARY.soldier;
+}
+
+function getNextDeckCardType(owner) {
+  const deckTypes = owner === 'player' ? playerDeckTypes : opponentDeckTypes;
+  return deckTypes.shift() || 'soldier';
+}
+
 function arrangePlayerHand() {
   const cards = [...playerHand.children];
   const availableWidth = playerHand.clientWidth || 600;
@@ -156,7 +181,8 @@ function updateHandCardDropTarget(clientX, clientY) {
 
 function beginHandCardDrag(card, event) {
   if (event.button !== 0) return;
-  if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < 1 || soldiers.length >= 7) {
+  const cardDefinition = getCardDefinition(card.dataset.cardType);
+  if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < cardDefinition.manaCost || soldiers.length >= 7) {
     card.classList.add('hand-card-unplayable');
     window.setTimeout(() => card.classList.remove('hand-card-unplayable'), 350);
     return;
@@ -202,7 +228,7 @@ function finishHandCardDrag(event) {
     handCardDragGhost.remove();
     handCardDragGhost = null;
   }
-  if (canDrop && card) playSoldierCard(card);
+  if (canDrop && card) playMinionCard(card);
 }
 
 function animateCardDraw(card, owner = 'player') {
@@ -262,7 +288,9 @@ function setHandPreviewContent(content) {
 function showCreaturePreview(soldier) {
   window.clearTimeout(creaturePreviewTimer);
   creaturePreviewTimer = window.setTimeout(() => {
-    setHandPreviewContent(`<span class="hand-card-cost">1</span>${soldierMarkup}`);
+    const minion = soldiers[Number(soldier.dataset.soldierIndex)];
+    if (!minion) return;
+    setHandPreviewContent(getHandCardMarkup(minion.cardType, getMinionAttack(minion), minion.health));
     handPreview.classList.add('hand-card-preview-visible');
     handPreview.setAttribute('aria-hidden', 'false');
   }, 250);
@@ -275,15 +303,17 @@ function hideCreaturePreview() {
   handPreview.innerHTML = '';
 }
 
-function playSoldierCard(card) {
-  if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < 1 || soldiers.length >= 7) {
+function playMinionCard(card) {
+  const cardType = card.dataset.cardType || 'soldier';
+  const cardDefinition = getCardDefinition(cardType);
+  if (!endTurnButton.classList.contains('your-turn') || playerCurrentMana < cardDefinition.manaCost || soldiers.length >= 7) {
     card.classList.add('hand-card-unplayable');
     window.setTimeout(() => card.classList.remove('hand-card-unplayable'), 350);
     return;
   }
 
   const sourceRect = card.getBoundingClientRect();
-  playerCurrentMana -= 1;
+  playerCurrentMana -= cardDefinition.manaCost;
   playerManaCount.textContent = `${playerCurrentMana} / ${playerMaxMana}`;
   updateManaCrystals(playerManaCrystals, playerCurrentMana, playerMaxMana);
   playerManaBar.setAttribute('aria-label', `Your mana: ${playerCurrentMana} of ${playerMaxMana}`);
@@ -292,7 +322,7 @@ function playSoldierCard(card) {
   handPreview.innerHTML = '';
   playerHand.removeChild(card);
   arrangePlayerHand();
-  soldiers.push({ hasAttacked: false, summoningSick: true });
+  soldiers.push(createMinionState(cardType));
   renderSoldiers();
   const soldierIndex = soldiers.length - 1;
   const target = playerLane.querySelector(`[data-soldier-index="${soldierIndex}"]`);
@@ -308,12 +338,14 @@ function playSoldierCard(card) {
   }, 820);
 }
 
-function addBlankCardToHand() {
+function addCardToHand(cardType = 'soldier') {
   if (playerHand.children.length >= MAX_HAND_SIZE) return;
   const card = document.createElement('div');
-  card.className = 'hand-card hand-card-blank hand-card-soldier';
-  card.innerHTML = `<span class="hand-card-cost">1</span>${soldierMarkup}`;
-  card.setAttribute('aria-label', 'Soldier card: costs 1 mana, 1 attack, 1 health');
+  const definition = getCardDefinition(cardType);
+  card.className = `hand-card hand-card-blank hand-card-minion ${cardType === 'aggressiveCommander' ? 'hand-card-commander' : 'hand-card-soldier'}`;
+  card.dataset.cardType = cardType;
+  card.innerHTML = getHandCardMarkup(cardType);
+  card.setAttribute('aria-label', `${definition.name}: costs ${definition.manaCost} mana, ${definition.attack} attack, ${definition.health} health`);
   let hoverTimer = null;
   card.addEventListener('pointerenter', () => {
     window.clearTimeout(hoverTimer);
@@ -353,12 +385,12 @@ function addOpponentCardToHand() {
   animateCardDraw(card, 'opponent');
 }
 
-function showBurnedCard() {
+function showBurnedCard(cardType = 'soldier') {
   window.clearTimeout(burnRevealTimer);
   window.clearTimeout(burnFinishTimer);
   handPreview.classList.remove('hand-card-preview-visible', 'hand-card-preview-burning', 'hand-card-preview-melted');
   handPreview.setAttribute('aria-hidden', 'false');
-  setHandPreviewContent(`<span class="hand-card-cost">1</span>${soldierMarkup}`);
+  setHandPreviewContent(getHandCardMarkup(cardType));
   window.requestAnimationFrame(() => {
     handPreview.classList.add('hand-card-preview-visible');
   });
@@ -377,17 +409,19 @@ function showBurnedCard() {
 
 function drawPlayerCard() {
   if (!drawCardFromDeck(playerDeck, playerDeckCount, 'player')) return;
+  const cardType = getNextDeckCardType('player');
   if (playerHand.children.length >= MAX_HAND_SIZE) {
-    showBurnedCard();
+    showBurnedCard(cardType);
     return;
   }
-  addBlankCardToHand();
+  addCardToHand(cardType);
 }
 
 function drawOpponentCard() {
   if (!drawCardFromDeck(opponentDeck, opponentDeckCount, 'opponent')) return;
+  const cardType = getNextDeckCardType('opponent');
   if (opponentHand.children.length >= MAX_HAND_SIZE) {
-    showBurnedCard();
+    showBurnedCard(cardType);
     return;
   }
   opponentHandCards += 1;
@@ -434,7 +468,47 @@ const centeredLayouts = [
   [0, 2, 4, 6, 8, 10, 12],
 ];
 
-const soldierMarkup = '<span class="unit-name">SOLDIER</span><svg class="soldier-art" viewBox="0 0 32 40" aria-hidden="true"><circle cx="16" cy="6" r="4"></circle><path d="M16 10v13M16 14 7 21M16 14l7 4M16 23l-7 11M16 23l7 11"></path><path class="sword-blade" d="M24 15.5 25.5 16 31 3 23.5 14.5Z"></path><path class="sword-guard" d="M21 14.8 26 17.3"></path><path class="sword-grip" d="M23.5 16 21.5 20"></path><circle class="sword-pommel" cx="20.7" cy="21.2" r="1.7"></circle></svg><span class="unit-stats">1 / 1</span>';
+const soldierArtMarkup = '<svg class="soldier-art" viewBox="0 0 32 40" aria-hidden="true"><circle cx="16" cy="6" r="4"></circle><path d="M16 10v13M16 14 7 21M16 14l7 4M16 23l-7 11M16 23l7 11"></path><path class="sword-blade" d="M24 15.5 25.5 16 31 3 23.5 14.5Z"></path><path class="sword-guard" d="M21 14.8 26 17.3"></path><path class="sword-grip" d="M23.5 16 21.5 20"></path><circle class="sword-pommel" cx="20.7" cy="21.2" r="1.7"></circle></svg>';
+const commanderArtMarkup = '<svg class="commander-art" viewBox="0 0 44 52" aria-hidden="true"><circle cx="19" cy="8" r="5"></circle><path d="M19 13v18M19 18 8 26M19 18l10 6M19 31 10 45M19 31l10 14M29 24V4"></path><path class="flag-pole" d="M29 4v41"></path><path class="red-flag" d="M30 5 42 9 30 14Z"></path></svg>';
+
+function hasCommanderAura() {
+  return soldiers.some((minion) => minion.cardType === 'aggressiveCommander');
+}
+
+function getMinionAttack(minion) {
+  const auraApplies = hasCommanderAura() && minion.cardType !== 'aggressiveCommander';
+  return minion.baseAttack + (auraApplies ? 1 : 0);
+}
+
+function createMinionState(cardType) {
+  const definition = getCardDefinition(cardType);
+  return {
+    cardType,
+    baseAttack: definition.attack,
+    health: definition.health,
+    hasAttacked: false,
+    summoningSick: true,
+  };
+}
+
+function getCardInnerMarkup(cardType, attackOverride = null, healthOverride = null) {
+  const definition = getCardDefinition(cardType);
+  const attack = attackOverride ?? definition.attack;
+  const health = healthOverride ?? definition.health;
+  if (cardType === 'aggressiveCommander') {
+    return `<span class="unit-name commander-name">AGGRESSIVE<br />COMMANDER</span>${commanderArtMarkup}<span class="commander-effect">Other units<br />+1 attack</span><span class="unit-stats">${attack} / ${health}</span>`;
+  }
+  return `<span class="unit-name">SOLDIER</span>${soldierArtMarkup}<span class="unit-stats">${attack} / ${health}</span>`;
+}
+
+function getHandCardMarkup(cardType, attackOverride = null, healthOverride = null) {
+  const definition = getCardDefinition(cardType);
+  return `<span class="hand-card-cost">${definition.manaCost}</span>${getCardInnerMarkup(cardType, attackOverride, healthOverride)}`;
+}
+
+function getBattlefieldMarkup(minion) {
+  return getCardInnerMarkup(minion.cardType, getMinionAttack(minion), minion.health);
+}
 
 function renderSoldiers() {
   const slots = [...playerLane.querySelectorAll('.slot-ring')];
@@ -453,7 +527,7 @@ function renderSoldiers() {
     slots[slotIndex].dataset.soldierIndex = soldierIndex;
     if (soldiers[soldierIndex].hasAttacked) slots[slotIndex].classList.add('has-attacked');
     if (soldiers[soldierIndex].summoningSick) slots[slotIndex].classList.add('summoning-sick');
-    slots[slotIndex].innerHTML = soldierMarkup;
+    slots[slotIndex].innerHTML = getBattlefieldMarkup(soldiers[soldierIndex]);
     slots[slotIndex].onpointerenter = () => showCreaturePreview(slots[slotIndex]);
     slots[slotIndex].onpointerleave = hideCreaturePreview;
     slots[slotIndex].onmouseenter = () => showCreaturePreview(slots[slotIndex]);
@@ -498,7 +572,7 @@ playerHeroPower.addEventListener('click', () => {
   playerManaCount.textContent = `${playerCurrentMana} / ${playerMaxMana}`;
   updateManaCrystals(playerManaCrystals, playerCurrentMana, playerMaxMana);
   playerManaBar.setAttribute('aria-label', `Your mana: ${playerCurrentMana} of ${playerMaxMana}`);
-  soldiers.push({ hasAttacked: false, summoningSick: true });
+  soldiers.push(createMinionState('soldier'));
   renderSoldiers();
   playerHeroPower.disabled = true;
   playerHeroPower.classList.add('hero-power-used', 'hero-power-flip');
@@ -575,6 +649,7 @@ window.addEventListener('pointerup', (event) => {
   if (hitOpponentHero && attackingSoldier) {
     const attackingElement = attackingSoldier;
     const attackingState = attackingSoldierState;
+    const damage = getMinionAttack(attackingState);
     const soldierRect = attackingElement.getBoundingClientRect();
     const targetRect = opponentHero.getBoundingClientRect();
     const attackX = targetRect.left + targetRect.width / 2 - soldierRect.left - soldierRect.width / 2;
@@ -585,9 +660,9 @@ window.addEventListener('pointerup', (event) => {
     attackingElement.classList.add('has-attacked', 'creature-attacking');
     attackingState.hasAttacked = true;
     window.setTimeout(() => {
-      opponentHeroHp = Math.max(0, opponentHeroHp - 1);
+      opponentHeroHp = Math.max(0, opponentHeroHp - damage);
       opponentHero.querySelector('span').textContent = `HERO-${opponentHeroHp}`;
-      showDamageIndicator(opponentHero, 1);
+      showDamageIndicator(opponentHero, damage);
       opponentHero.classList.add('hero-damaged');
       window.setTimeout(() => opponentHero.classList.remove('hero-damaged'), 400);
     }, 600);
