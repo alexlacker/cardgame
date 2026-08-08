@@ -469,7 +469,7 @@ const centeredLayouts = [
 ];
 
 const soldierArtMarkup = '<svg class="soldier-art" viewBox="0 0 32 40" aria-hidden="true"><circle cx="16" cy="6" r="4"></circle><path d="M16 10v13M16 14 7 21M16 14l7 4M16 23l-7 11M16 23l7 11"></path><path class="sword-blade" d="M24 15.5 25.5 16 31 3 23.5 14.5Z"></path><path class="sword-guard" d="M21 14.8 26 17.3"></path><path class="sword-grip" d="M23.5 16 21.5 20"></path><circle class="sword-pommel" cx="20.7" cy="21.2" r="1.7"></circle></svg>';
-const commanderArtMarkup = '<svg class="commander-art" viewBox="0 0 44 52" aria-hidden="true"><circle cx="19" cy="8" r="5"></circle><path d="M19 13v18M19 18 8 26M19 18l10 6M19 31 10 45M19 31l10 14M29 24V4"></path><path class="flag-pole" d="M29 4v41"></path><path class="red-flag" d="M30 5 42 9 30 14Z"></path></svg>';
+const commanderArtMarkup = '<svg class="commander-art" viewBox="0 0 48 52" aria-hidden="true"><circle cx="24" cy="8" r="5"></circle><path d="M24 13v18M24 18 13 26M24 18l10 6M24 31 15 45M24 31l10 14M34 24V4"></path><path class="flag-pole" d="M34 4v41"></path><path class="red-flag" d="M35 5 47 9 35 14Z"></path></svg>';
 
 function hasCommanderAura() {
   return soldiers.some((minion) => minion.cardType === 'aggressiveCommander');
