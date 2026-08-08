@@ -591,7 +591,7 @@ playerLane.addEventListener('pointerdown', (event) => {
   const soldier = event.target.closest('.slot-ring.occupied');
   if (!soldier) return;
   const soldierState = soldiers[Number(soldier.dataset.soldierIndex)];
-  if (!soldierState || soldierState.hasAttacked || soldierState.summoningSick) {
+  if (!endTurnButton.classList.contains('your-turn') || !soldierState || soldierState.hasAttacked || soldierState.summoningSick) {
     showAttackWarning(soldier);
     return;
   }
